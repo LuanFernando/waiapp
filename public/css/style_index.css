@@ -1,0 +1,102 @@
+
+body {
+    display: flex;
+}
+
+#treinos {
+    background-color: #3f4c6b;
+    width: 70%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#login {
+    background-color: #fff;
+    width: 30%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-link {
+    font-weight: bold;
+    font-size: 24px;
+    text-decoration: none;
+    padding: 12px;
+}
+
+#btn-login {
+    color: #3f4c6b;
+}
+
+#btn-treinos{
+    color: #fff;
+}
+
+#btn-login:hover {
+    border: solid 1px #3f4c6b;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius:12px;
+}
+
+#btn-treinos:hover{
+    border: solid 1px #fff;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius:12px;
+}
+
+
+#message-motivation {
+    position: absolute;
+    /* left: 25%; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    top: 5%;
+    gap: 48px;
+    /* color: #fff; */
+    background: #fff;
+    /* width: 100%; */
+    height: 70px;
+    padding: 12px;
+    border-radius: 0px 12px 12px 0px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+
+@media (max-width:1207px) {
+
+    body{
+        display: flex;
+        flex-direction: column;
+    }
+
+    #treinos, 
+    #login {
+        width: 100%;
+        height: 100vh;
+    }
+
+    #message-motivation{
+        position: fixed;
+        /* left: 25%; */
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        top: 0px;
+        gap: 48px;
+        /* color: #fff; */
+        background: #fff;
+        width: 100%;
+        height: 70px;
+        padding: 12px;
+        border-radius: 0px 0px 0px 0px;
+        box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,80 @@
+#list-cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card {
+    width: 100%;
+    height: 100vh;
+    /* background-color: #3f4c6b; */
+    display: flex;
+}
+
+.card-left {
+    width: 50%;
+    height: 100%;
+    /* background-color: #e65c00; */
+    display: flex;
+    gap: 12px;
+    flex-direction: column;
+    padding: 8px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.card-imagen {
+    width: 100%;
+    height: 80%;
+    border-radius: 5px;
+    /* background-color: #3f4c6b; */
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-imagen img {
+    width: 100%;
+}
+
+.card-num-series {
+    width: 100%; 
+    display: flex;
+    justify-content: center;
+}
+
+.card-right {
+    width: 50%;
+    height: 100%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.card-detalhes {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+}
+
+.card-exercicios-relacionados {
+    display: flex;
+    justify-content: space-around;
+    padding: 12px;
+
+}
+
+@media(max-width:1207px){
+    .card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-right,
+    .card-left {
+        width: 100%;
+    }
+}

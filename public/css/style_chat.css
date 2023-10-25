@@ -1,0 +1,41 @@
+.modal-chat-message {
+    width: 100%;
+    margin-top: 8px;
+    height: 60vh;
+    border-radius: 5px;
+    background: rgba(100, 100, 111, 0.2);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.modal-chat-action {    
+    width: 100%;
+    display: flex;
+    margin-top: 12px;
+    gap: 24px;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-chat-input {
+    background: rgba(100, 100, 111, 0.2);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+#chat-message-input {
+    padding: 4px;
+    background: rgba(100, 100, 111, 0.2);
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.btnSendMessage {
+
+}
+
+.btnSendLikeMessage{
+
+}
+
+.btnSendDesLikeMessage {
+
+}

@@ -1,0 +1,110 @@
+.btn-close,
+.btn-exit,
+.btn-delete {
+    padding: 12px;
+    border: 1px solid #d54d52;
+    border-radius: 5px;
+    background: #fff;
+    color: #000000;
+    font-weight: bold;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    
+}
+
+.btn-close:hover,
+.btn-exit:hover,
+.btn-delete:hover {
+    background-color: #d54d52;
+    color: #fff;
+}
+
+.btn-save,
+.btn-add {
+    padding: 12px;
+    border: 1px solid #aad961;
+    border-radius: 5px;
+    background: #fff;
+    color: #000000;
+    font-weight: bold;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.btn-save:hover,
+.btn-add:hover {
+    background-color: #aad961;
+    color: #fff;
+}
+
+.btn-info {
+    padding: 12px;
+    border: 1px solid #6885c1;
+    border-radius: 5px;
+    background: #fff;
+    color: #000000;
+    font-weight: bold;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; 
+}
+
+.btn-info:hover {
+    background-color: #6885c1;
+    color: #fff;
+}
+
+.btn-ver-user,
+.btn-editar-user,
+.btn-deletar-user {
+    width: 33%;
+    height: 24px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.btn-ver-user {
+    background-color:  #6885c1;
+}
+.btn-editar-user {
+    background-color: #fec002;
+}
+.btn-deletar-user {
+   background-color: #d54d52;
+}
+
+.btn-new-user {
+    padding: 12px;
+    border: 1px solid #6885c1;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; 
+    background-color: #6885c1;
+}
+
+.link-desabilitado {
+    pointer-events: none;
+    color: gray !important;
+    text-decoration: none !important;
+}
+
+.btn-ver-user-m,
+.btn-editar-user-m,
+.btn-deletar-user-m {
+    width: 50%;
+    height: 24px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-ver-user-m {
+    background-color:  #6885c1;
+}
+.btn-editar-user-m {
+    background-color: #fec002;
+}
+.btn-deletar-user-m {
+   background-color: #d54d52;
+}

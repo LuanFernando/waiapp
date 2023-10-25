@@ -1,0 +1,21 @@
+.content-store{
+    width: 100%;
+    height: 100vh;
+    background-color: #606c88; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+
+#inactive-store{
+    width: 100%;
+    height: 100vh;
+    background-color: #606c88; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}

@@ -1,0 +1,10 @@
+.footer-suport {
+    width: 100%;
+    display: flex;
+    min-height: 70px;
+    justify-content: center;
+    align-items: center;
+    background-color: #e65c00;
+    color: #fff;
+    margin-top: 45px;
+}
