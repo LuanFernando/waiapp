@@ -3,7 +3,13 @@ const btnChatClose = document.getElementById('btnChatClose');
 const btnSendMessage = document.getElementById('btnSendMessage');
 const btnSendLikeMessage = document.getElementById('btnSendLikeMessage');
 const btnSendDesLikeMessage = document.getElementById('btnSendDesLikeMessage');
-const urlChatMessage = '../manager/ChatManager.php';
+var urlChatMessage = '../manager/ChatManager.php';
+var isResumo = 0;
+
+if(document.getElementById('modal-users-resumo')){
+    urlChatMessage = '../../manager/ChatManager.php';
+    isResumo = 1;
+}
 
 checkInput();
 
@@ -185,8 +191,9 @@ function validateInput(){
 
 function getMessage(id)
 {
+    console.log(isResumo)
     // Processa as mensagens
-    fetch(urlChatMessage+"?action=messages&id="+id)
+    fetch(urlChatMessage+"?action=messages&id="+id+"&resumo="+isResumo)
     .then(response => {
         if(!response.ok){
             throw new Error('Falha na requisição GET');
