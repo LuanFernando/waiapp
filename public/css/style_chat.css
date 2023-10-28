@@ -1,10 +1,13 @@
 .modal-chat-message {
     width: 100%;
     margin-top: 8px;
-    height: 60vh;
+    height: 50vh;
     border-radius: 5px;
     background: rgba(100, 100, 111, 0.2);
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    overflow: overlay;
+    padding-bottom: 24px;
+    padding-top: 24px;
 }
 
 .modal-chat-action {    
@@ -29,13 +32,125 @@
 }
 
 .btnSendMessage {
-
+    width: 220px;
+    height: 80px;
+    background-color: #aad961;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    align-items: center;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .btnSendLikeMessage{
-
+    width: 220px;
+    height: 80px;
+    background-color: #6885c1;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    align-items: center;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
 .btnSendDesLikeMessage {
+    width: 220px;
+    height: 80px;
+    background-color: #d54d52;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    align-items: center;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
 
+.action-chat{
+    display: flex;
+    gap: 8px;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.label-message-origem {    
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-end;
+    gap: 4px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 0px 5px 5px 5px;
+    height: auto;
+    background: #e65c00;
+    color: #fff;
+    padding: 4px;
+    margin: 5px;
+}
+
+.label-message-destino {    
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+    gap: 4px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 5px 5px 5px 0px;
+    height: auto;
+    background: #3f4c6b;
+    color: #fff;
+    padding: 4px;
+    margin: 5px;
+}
+.position-message-origem {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.position-message-destino {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+@media (max-width:1207px){
+    .modal-chat-action {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .action-chat{
+        display: flex;
+        flex-direction: row;
+        /* flex-wrap: wrap; */
+        justify-content: space-evenly;
+        align-items: center;
+        align-content: center;
+        width: 100%;
+        gap: 4px;
+    }
+
+    .btnSendDesLikeMessage,
+    .btnSendLikeMessage,
+    .btnSendMessage {
+        width: 100%;
+        height: 50px;
+    }
+
+    #chat-message-input{
+        width: 100%;
+        padding: 0px;
+    }
 }
