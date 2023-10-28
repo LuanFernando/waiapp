@@ -61,21 +61,57 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
 
         while($linha = $result->fetch_assoc()){
 
-            if($idOrigem == $linha['origin_id']){
-                $message .= "<div class='position-message-origem'>
-                                <div class='label-message-origem'>
-                                    <label>{$linha['created']}</label>
-                                    <label>{$linha['message']}</label>
-                                </div>
-                            </div>";
-            }else{
-                $message .= "
-                            <div class='position-message-destino'>
-                                <div class='label-message-destino'>
-                                    <label>{$linha['created']}</label>
-                                    <label>{$linha['message']}</label>
-                                </div>
-                            </div>";
+            if($linha['reaction'] != null ){
+
+                if($linha['reaction'] == 2 ){
+                    if($idOrigem == $linha['origin_id']){
+                        $message .= "<div class='position-message-origem'>
+                                        <div class='label-img-origem'>
+                                            <img src='../img/nao-gosto.png' style='width:32px;'>
+                                        </div>
+                                    </div>";
+                    }else{
+                        $message .= "
+                                    <div class='position-message-destino'>
+                                        <div class='label-img-destino'>
+                                            <img src='../img/nao-gosto.png' style='width:32px;'>
+                                        </div>
+                                    </div>";
+                    }
+                }else{
+                    if($idOrigem == $linha['origin_id']){
+                        $message .= "<div class='position-message-origem'>
+                                        <div class='label-img-origem'>
+                                            <img src='../img/gostar.png' style='width:32px;'>
+                                        </div>
+                                    </div>";
+                    }else{
+                        $message .= "
+                                    <div class='position-message-destino'>
+                                        <div class='label-img-destino'>
+                                            <img src='../img/gostar.png' style='width:32px;'>
+                                        </div>
+                                    </div>";
+                    }
+                }
+            }
+            else{
+                if($idOrigem == $linha['origin_id']){
+                    $message .= "<div class='position-message-origem'>
+                                    <div class='label-message-origem'>
+                                        <label>{$linha['created']}</label>
+                                        <label>{$linha['message']}</label>
+                                    </div>
+                                </div>";
+                }else{
+                    $message .= "
+                                <div class='position-message-destino'>
+                                    <div class='label-message-destino'>
+                                        <label>{$linha['created']}</label>
+                                        <label>{$linha['message']}</label>
+                                    </div>
+                                </div>";
+                }
             }
         }
 
@@ -122,5 +158,61 @@ else if($_SERVER['REQUEST_METHOD'] === 'POST'){
             $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => 'Não foi possivel enviar a mensagem para o usuário, algo deu errado!'];
             echo json_encode($response);
         }
-    }
+    } else if($dataJson['action'] == 'newMessageLike'){
+        
+            session_start();
+    
+            $idDestino = $dataJson['idDestino'];
+            $idOrigem  = $_SESSION['idUser'];
+            $createdUpdatedDate  = date('Y-m-d H:i:s');
+            $reaction = 1; //like
+            $message = 'like';
+    
+            if(empty($idDestino) || empty($idOrigem)){
+                $response = ['warning' => 1, 'error' => 0, 'success' => 0, 'message' => 'Não foi possivel enviar a mensagem para o usuário, atualize a página e tente novamente!'];
+                echo json_encode($response);
+            }
+    
+            $stmt = $conn->prepare("INSERT INTO chat_message (origin_id, destiny_id, reaction, created, updated,message) VALUES (? ,? ,? ,? ,?,?) ");
+            $stmt->bind_param("iiisss", $idOrigem ,$idDestino ,$reaction, $createdUpdatedDate, $createdUpdatedDate,$message);
+    
+            if($stmt->execute()){
+                http_response_code(200); //success
+                $response = ['warning' => 0, 'error' => 0, 'success' => 1, 'message' => ""];
+                echo json_encode($response);
+            }else{
+                http_response_code(400); // error
+                $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => 'Não foi possivel enviar a mensagem para o usuário, algo deu errado!'];
+                echo json_encode($response);
+            }
+        
+    } else if($dataJson['action'] == 'newMessageDesLike'){
+        
+        session_start();
+
+        $idDestino = $dataJson['idDestino'];
+        $idOrigem  = $_SESSION['idUser'];
+        $createdUpdatedDate  = date('Y-m-d H:i:s');
+        $reaction = 2; //deslike
+        $message = 'deslike';
+
+        if(empty($idDestino) || empty($idOrigem)){
+            $response = ['warning' => 1, 'error' => 0, 'success' => 0, 'message' => 'Não foi possivel enviar a mensagem para o usuário, atualize a página e tente novamente!'];
+            echo json_encode($response);
+        }
+
+        $stmt = $conn->prepare("INSERT INTO chat_message (origin_id, destiny_id, reaction, created, updated,message) VALUES (? ,? ,? ,? ,?, ?) ");
+        $stmt->bind_param("iiisss", $idOrigem ,$idDestino ,$reaction, $createdUpdatedDate, $createdUpdatedDate,$message);
+
+        if($stmt->execute()){
+            http_response_code(200); //success
+            $response = ['warning' => 0, 'error' => 0, 'success' => 1, 'message' => ""];
+            echo json_encode($response);
+        }else{
+            http_response_code(400); // error
+            $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => 'Não foi possivel enviar a mensagem para o usuário, algo deu errado!'];
+            echo json_encode($response);
+        }
+    
+}
 }
