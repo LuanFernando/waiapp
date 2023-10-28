@@ -20,7 +20,48 @@ btnChatClose.addEventListener('click', function(){
 })
 
 btnSendLikeMessage.addEventListener('click', function(){
-    alert('Send like')
+    let dataChat = {
+        'idDestino'  : document.getElementById('id-destino').value,
+        'action'     : 'newMessageLike'
+    }
+
+    const options = {
+        method  : 'POST',
+        headers : {
+            'Content-Type' : 'application/json'
+        },
+        body : JSON.stringify(dataChat) // Converte dados em JSON
+    }
+
+    fetch(urlChatMessage, options)
+    .then(response => {
+        if(!response.ok){
+            throw new Error ('Falha ao enviar a requisição POST');
+        }
+
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        
+        if(data.success == 1 && data.warning == 0 && data.error == 0){
+            // limpa input
+            document.getElementById('chat-message-input').value = "";
+            
+            // atualiza display de mensagem
+            getMessage(document.getElementById('id-destino').value);
+        }
+        else if(data.success == 0 && data.warning == 1 && data.error == 0){
+            alert(data.message);
+        }
+        else if(data.success == 0 && data.warning == 0 && data.error == 1){
+            alert(data.message);
+        }
+
+    })
+    .catch(error => {
+        console.log(error);
+    })
 })
 
 btnSendMessage.addEventListener('click', function(){
@@ -75,7 +116,48 @@ btnSendMessage.addEventListener('click', function(){
 })
 
 btnSendDesLikeMessage.addEventListener('click', function(){
-    alert('Send deslike')
+    let dataChat = {
+        'idDestino'  : document.getElementById('id-destino').value,
+        'action'     : 'newMessageDesLike'
+    }
+
+    const options = {
+        method  : 'POST',
+        headers : {
+            'Content-Type' : 'application/json'
+        },
+        body : JSON.stringify(dataChat) // Converte dados em JSON
+    }
+
+    fetch(urlChatMessage, options)
+    .then(response => {
+        if(!response.ok){
+            throw new Error ('Falha ao enviar a requisição POST');
+        }
+
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+        
+        if(data.success == 1 && data.warning == 0 && data.error == 0){
+            // limpa input
+            document.getElementById('chat-message-input').value = "";
+            
+            // atualiza display de mensagem
+            getMessage(document.getElementById('id-destino').value);
+        }
+        else if(data.success == 0 && data.warning == 1 && data.error == 0){
+            alert(data.message);
+        }
+        else if(data.success == 0 && data.warning == 0 && data.error == 1){
+            alert(data.message);
+        }
+
+    })
+    .catch(error => {
+        console.log(error);
+    })
 })
 
 function checkInput(){
