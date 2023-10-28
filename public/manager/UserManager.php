@@ -25,8 +25,19 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
             $student = ($linha['student'] == 'S' ? 'Sim' : 'Não');
             $linkDesabilitado = ( $linha['deleted'] != '' && $linha['deleted'] != null  ? 'link-desabilitado' : '');
 
+            session_start();
+            $cssUserLogado  = '';
+            $iconUserLogado = '';
+            $idUserLogado   = $_SESSION['idUser'];
+
+            if($idUserLogado == $linha['id']){
+                $cssUserLogado = "style='background: #e65c0085;color:#fff;'";
+                $iconUserLogado = "<img src='../img/user.png' style='width:16px;'>";
+            }
+
             $tableUsers .= "<tr>";
-            $tableUsers .= "<td>{$linha['id']}</td>";
+            $tableUsers .= "<td {$cssUserLogado} > <div style='
+            display: flex;gap: 8px;align-content: center;flex-direction: row;align-items: center;justify-content: center;'>$iconUserLogado {$linha['id']}</div></td>";
             $tableUsers .= "<td>{$linha['name']}</td>";
             $tableUsers .= "<td>{$student}</td>";
             $tableUsers .= "<td>{$linha['created']}</td>";
@@ -63,8 +74,19 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
             $student = ($linha['student'] == 'S' ? 'Sim' : 'Não');
             $linkDesabilitado = ( $linha['deleted'] != '' && $linha['deleted'] != null  ? 'link-desabilitado' : '');
 
+            session_start();
+            $cssUserLogado  = '';
+            $idUserLogado   = $_SESSION['idUser'];
+            $iconUserLogado = '';
+
+            if($idUserLogado == $linha['id']){
+                $cssUserLogado = "style='background: #e65c0085;color:#fff;'";
+                $iconUserLogado = "<img src='../img/user.png' style='width:16px;'>";
+            }
+
             $tableUsers .= "<tr>";
-            $tableUsers .= "<td>{$linha['id']}</td>";
+            $tableUsers .= "<td $cssUserLogado > <div style='
+            display: flex;gap: 8px;align-content: center;flex-direction: row;align-items: center;justify-content: center;'>$iconUserLogado {$linha['id']} </div></td>";
             $tableUsers .= "<td>{$linha['name']}</td>";
             $tableUsers .= "<td>{$student}</td>";
             $tableUsers .= "<td>{$linha['created']}</td>";

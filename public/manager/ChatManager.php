@@ -14,7 +14,10 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
         session_start();
         $message = "";
         $idDestino = $_GET['id']; // destino
-        $idOrigem  = $_SESSION['idUser']; //usuario logado
+        $idOrigem  = $_SESSION['idUser']; //usuario 
+        $resumo    = $_GET['resumo'];
+        $srcDesLike = '../img/nao-gosto.png';
+        $srcLike = '../img/gostar.png';
         
         try {
             // Preparar a declaração SQL
@@ -63,18 +66,23 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
 
             if($linha['reaction'] != null ){
 
+                if($resumo == 1){
+                    $srcDesLike = '../../img/nao-gosto.png';
+                    $srcLike = '../../img/gostar.png';
+                }
+
                 if($linha['reaction'] == 2 ){
                     if($idOrigem == $linha['origin_id']){
                         $message .= "<div class='position-message-origem'>
                                         <div class='label-img-origem'>
-                                            <img src='../img/nao-gosto.png' style='width:32px;'>
+                                            <img src='{$srcDesLike}' style='width:32px;'>
                                         </div>
                                     </div>";
                     }else{
                         $message .= "
                                     <div class='position-message-destino'>
                                         <div class='label-img-destino'>
-                                            <img src='../img/nao-gosto.png' style='width:32px;'>
+                                            <img src='{$srcDesLike}' style='width:32px;'>
                                         </div>
                                     </div>";
                     }
@@ -82,14 +90,14 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
                     if($idOrigem == $linha['origin_id']){
                         $message .= "<div class='position-message-origem'>
                                         <div class='label-img-origem'>
-                                            <img src='../img/gostar.png' style='width:32px;'>
+                                            <img src='{$srcLike}' style='width:32px;'>
                                         </div>
                                     </div>";
                     }else{
                         $message .= "
                                     <div class='position-message-destino'>
                                         <div class='label-img-destino'>
-                                            <img src='../img/gostar.png' style='width:32px;'>
+                                            <img src='{$srcLike}' style='width:32px;'>
                                         </div>
                                     </div>";
                     }
