@@ -125,6 +125,38 @@
     justify-content: flex-start;
 }
 
+.label-img-origem{
+    width: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: center;
+    gap: 4px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 0px 5px 5px 5px;
+    height: auto;
+    background: #e65c00;
+    color: #fff;
+    padding: 4px;
+    margin: 5px;
+}
+
+.label-img-destino {
+    width: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    gap: 4px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    border-radius: 5px 5px 5px 0px;
+    height: auto;
+    background: #3f4c6b;
+    color: #fff;
+    padding: 4px;
+    margin: 5px;
+}
+
 @media (max-width:1207px){
     .modal-chat-action {
         display: flex;
