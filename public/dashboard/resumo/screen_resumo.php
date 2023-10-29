@@ -18,7 +18,7 @@
                     <th width="6%" >Criado</th>
                     <th width="6%" >Atualizado</th>
                     <th width="6%" >Deletado</th>
-                    <th width="9%" >Opções</th>
+                    <th width="30%" >Opções</th>
                 </tr>
             </thead>
             <tbody id="tbody-users">
