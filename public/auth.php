@@ -11,7 +11,7 @@ if($_POST['usuario'] != null && $_POST['senha'] && $_POST['action'] == 'auth')
     $action   = $_POST['action'];
 
     /** Consulta se o usuário e senha existe na base de dados */
-    $queryConsult = "SELECT token, password, deleted FROM user WHERE name = ? ";
+    $queryConsult = "SELECT token, password, deleted, id , student FROM user WHERE name = ? ";
     $stmt = $conn->prepare($queryConsult);
     $stmt->bind_param("s", $user);
     $stmt->execute();
@@ -26,6 +26,9 @@ if($_POST['usuario'] != null && $_POST['senha'] && $_POST['action'] == 'auth')
 
             // Salva informações na session, antes de redirecionar
             $_SESSION['token'] = $row['token'];
+            $_SESSION['idUser'] = $row['id'];
+            $_SESSION['student'] = $row['student'];
+
             $url = "/dashboard";
             header('Location: '.$url);
             exit(); // Certifique -se de sair após o redirecionamento
