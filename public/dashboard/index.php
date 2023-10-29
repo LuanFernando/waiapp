@@ -12,6 +12,7 @@ require_once('../session.php');
 include_once('../config.env.php');
 
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -32,58 +33,70 @@ include_once('../config.env.php');
     <?php include_once('screen_crud_users.php'); ?>
     <?php include_once('screen_new_edit_user.php'); ?>
 
-    <div class="content">
+    <?php 
+    session_start(); 
+    if($_SESSION['student'] != 'S') {
+    // dashboard do admin
+    ?>
+        <div class="content">
 
-        <div class="card-dashboard">
-            <div class="card-dashboard-part1">
-                <h3>Usuários</h3>
-                <label for="" class="label-subtitle">* cadastrados</label>
-                <h1 id="qnt-usuario"><strong>0</strong></h1>
+            <div class="card-dashboard">
+                <div class="card-dashboard-part1">
+                    <h3>Usuários</h3>
+                    <label for="" class="label-subtitle">* cadastrados</label>
+                    <h1 id="qnt-usuario"><strong>0</strong></h1>
+                </div>
+                <div class="card-dashboard-part2">
+                    <a href="#" class="btn-card-dasboard" id="btnCrudUsers">Ver mais</a>
+                </div>
             </div>
-            <div class="card-dashboard-part2">
-                <a href="#" class="btn-card-dasboard" id="btnCrudUsers">Ver mais</a>
+
+            <div class="card-dashboard">
+                <div class="card-dashboard-part1">
+                    <h3>Dietas</h3>
+                    <label for="" class="label-subtitle">* cadastrados</label>
+                    <h1><strong>0</strong></h1>
+                </div>
+                <div class="card-dashboard-part2">
+                    <a href="#" class="btn-card-dasboard">Ver mais</a>
+                </div>
             </div>
+
+            <div class="card-dashboard">
+                <div class="card-dashboard-part1">
+                    <h3>Treinos</h3>
+                    <label for="" class="label-subtitle">* cadastrados</label>
+                    <h1><strong>0</strong></h1>
+                </div>
+                <div class="card-dashboard-part2">
+                    <a href="#" class="btn-card-dasboard">Ver mais</a>
+                </div>
+            </div>
+
+            <div class="card-dashboard">
+                <div class="card-dashboard-part1">
+                    <h3>Produtos</h3>
+                    <label for="" class="label-subtitle">* cadastrados</label>
+                    <h1><strong>0</strong></h1>
+                </div>
+                <div class="card-dashboard-part2">
+                    <a href="#" class="btn-card-dasboard">Ver mais</a>
+                </div>
+            </div>
+
         </div>
 
-        <div class="card-dashboard">
-            <div class="card-dashboard-part1">
-                <h3>Dietas</h3>
-                <label for="" class="label-subtitle">* cadastrados</label>
-                <h1><strong>0</strong></h1>
-            </div>
-            <div class="card-dashboard-part2">
-                <a href="#" class="btn-card-dasboard">Ver mais</a>
-            </div>
-        </div>
+        <!-- JS -->
+        <script src="../js/dashboard.js?v=1.2"></script>
+        <script src="../js/modals_dashboard.js?v=1.1"></script>
 
-        <div class="card-dashboard">
-            <div class="card-dashboard-part1">
-                <h3>Treinos</h3>
-                <label for="" class="label-subtitle">* cadastrados</label>
-                <h1><strong>0</strong></h1>
-            </div>
-            <div class="card-dashboard-part2">
-                <a href="#" class="btn-card-dasboard">Ver mais</a>
-            </div>
-        </div>
-
-        <div class="card-dashboard">
-            <div class="card-dashboard-part1">
-                <h3>Produtos</h3>
-                <label for="" class="label-subtitle">* cadastrados</label>
-                <h1><strong>0</strong></h1>
-            </div>
-            <div class="card-dashboard-part2">
-                <a href="#" class="btn-card-dasboard">Ver mais</a>
-            </div>
-        </div>
-
-
-    </div>
-
-    <!-- JS -->
-    <script src="../js/dashboard.js?v=1.2"></script>
-    <script src="../js/modals_dashboard.js?v=1.1"></script>
+    <?php 
+        } else {
+    ?>
+        <p>dashboard do aluno</p>
+    <?php 
+        }
+    ?>
 
 </body>
 </html>
