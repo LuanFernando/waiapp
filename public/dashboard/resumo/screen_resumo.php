@@ -36,3 +36,4 @@
 <script src="../../js/table_users.js?v=1.1"></script>
 <script src="../../js/delete_and_edit_users.js?v=1.1"></script>
 <script src="../../js/chat.js?v=1.1"></script>
+<script src="../../js/mensalidade.js?v=1.1"></script>
