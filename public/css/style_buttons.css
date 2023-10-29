@@ -61,6 +61,16 @@
     justify-content: center;
 }
 
+.btn-mensalidade-user{
+    width: 33%;
+    height: 24px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background-color: #aad961;
+}
+
 
 .btn-ver-user {
     background-color:  #6885c1;
@@ -107,4 +117,14 @@
 }
 .btn-deletar-user-m {
    background-color: #d54d52;
+}
+
+.btn-mensalidade-user-m{
+    width: 50%;
+    height: 24px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background-color: #aad961;
 }
