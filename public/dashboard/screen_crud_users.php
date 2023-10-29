@@ -13,12 +13,12 @@
             <thead>
                 <tr>
                     <th width="6%" >Id</th>
-                    <th width="12%">Nome</th>
+                    <th width="20%">Nome</th>
                     <th width="6%" >Aluno</th>
                     <th width="6%" >Criado</th>
                     <th width="6%" >Atualizado</th>
                     <th width="6%" >Deletado</th>
-                    <th width="9%" >Opções</th>
+                    <th width="30%" >Opções</th>
                 </tr>
             </thead>
             <tbody id="tbody-users">
