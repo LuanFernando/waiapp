@@ -68,7 +68,12 @@ if($databaseCreated == true){
                 company_email VARCHAR(255) NOT NULL, cgc VARCHAR(50) NOT NULL )',
         'chat_message' => 'CREATE TABLE chat_message(id INT AUTO_INCREMENT PRIMARY KEY,
                 origin_id INT NOT NULL, destiny_id INT NOT NULL, message VARCHAR(4000) NOT NULL ,
-                reaction INT, created DATETIME, updated DATETIME, deleted DATETIME)'
+                reaction INT, created DATETIME, updated DATETIME, deleted DATETIME)',
+        'monthly_payment' => 'CREATE TABLE monthly_payment(id INT AUTO_INCREMENT PRIMARY KEY,idAluno INT NOT NULL,
+                valor DECIMAL(10, 2), dataVencimento DATE NOT NULL, dataPagamento DATE, formaPagamento VARCHAR(50),
+                idUsuarioBaixa INT, observacoes VARCHAR(255), status_pagamento VARCHAR(50) NOT NULL,
+                FOREIGN KEY (idAluno) REFERENCES user(id),
+                FOREIGN KEY (idUsuarioBaixa) REFERENCES user(id) )'
     );
     
     
