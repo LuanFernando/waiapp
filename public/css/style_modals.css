@@ -37,6 +37,7 @@
 .modal-big-header-actions {
     display: flex;
     gap: 8px;
+    flex-wrap: wrap;
 }
 
 @media (max-width:1207px){

@@ -31,6 +31,7 @@
 
 <!--  -->
 <?php require('../common-component/modal-chat.php'); ?>
+<?php require('../common-component/modal-mensalidade.php'); ?>
 
 <!-- JS -->
 <script src="../js/table_users.js?v=1.1"></script>

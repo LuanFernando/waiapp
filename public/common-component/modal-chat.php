@@ -9,16 +9,19 @@
         </div>
     </div>
     <div class="modal-big-body">
-        <div class="modal-chat-message">
+        <div class="modal-chat-message" id="modal-chat-message">
 
         </div>
         <div class="modal-chat-action">
             <div class="modal-chat-input">
-                <textarea name="chat-message-input" id="chat-message-input" cols="150" rows="4"></textarea>
+                <input type="hidden" name="id-destino" id="id-destino" value="">
+                <textarea name="chat-message-input" id="chat-message-input" cols="80" rows="4" oninput="checkInput()"></textarea>
             </div>
-            <a href="#" class="btnSendMessage">Enviar</a>
-            <a href="#" class="btnSendLikeMessage">Like</a>
-            <a href="#" class="btnSendDesLikeMessage">Deslike</a>
+            <div class="action-chat">
+                <a href="#" class="btnSendMessage" id="btnSendMessage" onclick="return validateInput()">Enviar</a>
+                <a href="#" class="btnSendLikeMessage" id="btnSendLikeMessage">Like</a>
+                <a href="#" class="btnSendDesLikeMessage" id="btnSendDesLikeMessage">Deslike</a>
+            </div>
         </div>
     </div>
     <div class="modal-big-footer"> </div>

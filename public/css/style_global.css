@@ -14,6 +14,7 @@
 .table {
     width: 100%;
     margin-top: 8px;
+    margin-bottom: 70px;
 }
 
 thead {
@@ -92,4 +93,21 @@ th {
     justify-content: center;
     width: 100%;
     gap: 8px;
+}
+
+@media(max-width:1207px){
+    
+    #formNewUser{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    .row ,
+    .col-6{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
 }

@@ -24,6 +24,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
 
             $student = ($linha['student'] == 'S' ? 'Sim' : 'Não');
             $linkDesabilitado = ( $linha['deleted'] != '' && $linha['deleted'] != null  ? 'link-desabilitado' : '');
+            $linkDesabilitaMensalidade = ($student == 'Sim' ? '' : 'link-desabilitado');
 
             session_start();
             $cssUserLogado  = '';
@@ -44,7 +45,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
             $tableUsers .= "<td>{$linha['updated']}</td>";
             $tableUsers .= "<td>{$linha['deleted']}</td>";
             $tableUsers .= "<td class='td-actions'>";
-                $tableUsers .= "<a href='#' data-id='{$linha['id']}' onclick='mensalidadeUser({$linha['id']})' class='btn-mensalidade-user'>Mensalidades</a>";
+                $tableUsers .= "<a href='#' data-id='{$linha['id']}' onclick='mensalidadeUser({$linha['id']})' class='btn-mensalidade-user {$linkDesabilitaMensalidade}'>Mensalidade</a>";
                 $tableUsers .= "<a href='#' data-id='{$linha['id']}' onclick='chat({$linha['id']})' class='btn-ver-user {$linkDesabilitado}'>Chat</a>";
                 $tableUsers .= "<a href='#' data-id='{$linha['id']}' onclick='editUser({$linha['id']})' class='btn-editar-user'>Editar</a>";
                 $tableUsers .= "<a href='#' data-id='{$linha['id']}' onclick='confirmDeleteUser({$linha['id']})' class='btn-deletar-user {$linkDesabilitado}'>Deletar</a>";
@@ -74,6 +75,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
 
             $student = ($linha['student'] == 'S' ? 'Sim' : 'Não');
             $linkDesabilitado = ( $linha['deleted'] != '' && $linha['deleted'] != null  ? 'link-desabilitado' : '');
+            $linkDesabilitaMensalidade = ($student == 'Sim' ? '' : 'link-desabilitado');
 
             session_start();
             $cssUserLogado  = '';
@@ -94,7 +96,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
             $tableUsers .= "<td>{$linha['updated']}</td>";
             $tableUsers .= "<td>{$linha['deleted']}</td>";
             $tableUsers .= "<td class='td-actions'>";
-                $tableUsers .= "<a href='#' data-id='{$linha['id']}' onclick='mensalidadeUser({$linha['id']})' class='btn-mensalidade-user-m'>Mensalidades</a>";
+                $tableUsers .= "<a href='#' data-id='{$linha['id']}' onclick='mensalidadeUser({$linha['id']})' class='btn-mensalidade-user-m {$linkDesabilitaMensalidade}'>Mensalidade</a>";
                 $tableUsers .= "<a href='#' data-id='{$linha['id']}' onclick='chat({$linha['id']})' class='btn-ver-user-m {$linkDesabilitado}'>Chat</a>";
                 // $tableUsers .= "<a href='#' data-id='{$linha['id']}' onclick='editUser({$linha['id']})' class='btn-editar-user'>Editar</a>";
                 $tableUsers .= "<a href='#' data-id='{$linha['id']}' onclick='confirmDeleteUser({$linha['id']})' class='btn-deletar-user-m {$linkDesabilitado}'>Deletar</a>";

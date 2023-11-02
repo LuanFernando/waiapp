@@ -3,7 +3,6 @@ const urlTableUsersCurrent = '../../manager/UserManager.php?action=listUsersCurr
 
 if(document.getElementById('modal-users-resumo')){
     
-    console.log('here')
     fetch(urlTableUsersCurrent)
     .then(response => {
         if(!response.ok){

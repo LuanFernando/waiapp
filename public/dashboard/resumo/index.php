@@ -25,6 +25,7 @@ include_once('../../config.env.php');
     <link rel="stylesheet" href="../../css/style_modal_loggoff.css">
     <link rel="stylesheet" href="../../css/style_modal_delete_user.css">
     <link rel="stylesheet" href="../../css/style_chat.css">
+    <link rel="stylesheet" href="../../css/style_mensalidade.css">
 </head>
 <body>
     

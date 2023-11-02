@@ -71,6 +71,25 @@
     background-color: #aad961;
 }
 
+.btn-mensalidade-pagar{
+    width: 50%;
+    height: 24px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background-color: #aad961;
+}
+
+.btn-mensalidade-cancelar {
+    width: 50%;
+    height: 24px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background-color: #d54d52;
+}
 
 .btn-ver-user {
     background-color:  #6885c1;
@@ -127,4 +146,24 @@
     align-items: center;
     justify-content: center;
     background-color: #aad961;
+}
+
+.btn-mensalidade-pagar-m{
+    width: 50%;
+    height: 24px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background-color: #aad961;
+}
+
+.btn-mensalidade-cancelar-m {
+    width: 50%;
+    height: 24px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    background-color: #d54d52;
 }

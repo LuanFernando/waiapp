@@ -1,0 +1,131 @@
+.divSelectYear{
+    height: 42px;
+    background-color: #e65c00;
+    border-radius: 5px;
+    padding-left: 8px;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    width: 141px;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.selectYear{ 
+    border: 1px solid #ccc;
+    width: 100px;
+    height: 42px;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+    border: 1px solid #e65c00;
+    outline-color: #e65c00;
+}
+
+.selectYear:focus{
+    outline-color: #e65c00;
+}
+
+.lengenda-valores-mensalidades {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.item-legenda{
+    display: flex;
+    height: 50px;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+
+#btnGerar1 {
+    border: 1px solid #ccc;
+    width: 100px;
+    height: 42px;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+    border: 1px solid #606c88;
+    outline-color: #606c88;
+    background-color: #606c88;
+    color: #fff;
+}
+
+#btnGerar12 {
+    border: 1px solid #ccc;
+    width: 100px;
+    height: 42px;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+    border: 1px solid #fec002;
+    outline-color: #fec002;
+    background-color: #fec002;
+    color: #fff;
+}
+#btnPagarTodas {
+    
+    border: 1px solid #ccc;
+    width: 100px;
+    height: 42px;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+    border: 1px solid #6885c1;
+    outline-color: #6885c1;
+    background-color: #6885c1;
+    color: #fff;
+}
+#btnCancelarTodas {
+    
+    border: 1px solid #ccc;
+    width: 100px;
+    height: 42px;
+    text-align: center;
+    border-radius: 5px;
+    font-weight: bold;
+    border: 1px solid #d54d52;
+    outline-color: #d54d52;
+    background-color: #d54d52;
+    color: #fff;
+}
+.legenda-total{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    gap: 4px;
+}
+
+.legenda-total p{
+    font-size: 12px;
+}
+
+.table-mensalidade{
+    width: 100%;
+}
+
+@media(max-width:1207px){
+    .lengenda-valores-mensalidades{
+        margin-top: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .item-legenda{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        gap: 14px;
+        justify-content: flex-start;
+    }
+}
