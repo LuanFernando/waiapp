@@ -27,6 +27,7 @@ include_once('../config.env.php');
     <link rel="stylesheet" href="../css/style_modal_delete_user.css">
     <link rel="stylesheet" href="../css/style_chat.css">
     <link rel="stylesheet" href="../css/style_mensalidade.css">
+    <link rel="stylesheet" href="../css/style_modal_gerar_mensalidade.css">
 </head>
 <body>
     

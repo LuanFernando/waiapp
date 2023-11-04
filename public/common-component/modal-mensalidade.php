@@ -2,17 +2,16 @@
     <div class="modal-big-header">
         <div class="modal-big-header-title">
             <h2>Mensalidade</h2>
+            <div class="alerta-pendencia" id="alerta-pendencia" >
+
+            </div>
         </div>
         <div class="modal-big-header-actions">
 
             <input type="hidden" name="idAlunoMensalidade" id="idAlunoMensalidade" value="">
 
-            <div class="divGerar1">
-                <button type="button" id="btnGerar1">Gerar 1x</button>
-            </div>
-
-            <div class="divGerar12">
-                <button type="button" id="btnGerar12">Gerar 12x</button>
+            <div class="divGerar">
+                <button type="button" id="btnGerarMensalidade">Gerar Mensalidade</button>
             </div>
 
             <div class="divPagarTodas">

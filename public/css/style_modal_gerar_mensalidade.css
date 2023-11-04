@@ -1,0 +1,88 @@
+#modalGerarMensalidade {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    width: 70%;
+    height: 50%;
+    border: none;
+    margin-top: 70px;
+}
+
+.modal-gerarmensalidade-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.modal-gerarmensalidade-title {
+    display: flex;
+    justify-content: center;
+}
+
+.modal-gerarmensalidade-actions {
+    margin-top: 8px;
+    display: flex;
+    gap: 14px;
+    flex-direction: row;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.modal-gerarmensalidade-body{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.modal-gerar-mensalidade-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.modal-gerar-mensalidade-form input {
+    height: 36px;
+    /* width: 100%; */
+    border: 1px solid #606c88;
+    border-radius: 5px;
+    padding: 0px 8px;
+    font-size: 16px;
+}
+
+#modalQuestionGerarMensalidade {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    width: 70%;
+    height: 50%;
+    border: none;
+    margin-top: 70px;
+}
+
+.modal-question-gerarmensalidade-actions {
+    margin-top: 8px;
+    display: flex;
+    gap: 14px;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.modal-question-gerarmensalidade-body {
+    gap: 12px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+}

@@ -180,8 +180,53 @@ include_once('../connection.php');
             $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => 'Não foi possivel identificar o ID do usuário!'];
             echo json_encode($response);
         }
+    } else if($_GET['action'] == 'alertaPendencia'){
+        $idAluno = $_GET['idAluno'];
+        $dataAtual = date('Y-m-d');
+        if($idAluno > 0){
+
+            try {
+                // Preparar a declaração SQL
+                $stmt = $conn->prepare("SELECT COUNT(mp.id) As qtPendencias
+                FROM monthly_payment mp
+                WHERE mp.idAluno = ? AND mp.dataVencimento < ? AND mp.status_pagamento = 'pendente' ");
+        
+                // Vincular os parâmetros
+                $stmt->bind_param("is", $idAluno , $dataAtual);
+
+                // Executar a consulta
+                $stmt->execute();
+            
+            } catch (\Exception $e) {
+                echo $e;
+            }
+
+             // Obter resultados
+             $result = $stmt->get_result();
+
+             if($result != null){
+                $srcImg = '';
+
+                while ($row = $result->fetch_assoc()) {
+                    if($row['qtPendencias'] > 0){
+                        if($_GET['pagina'] == 'resumo'){
+                            $srcImg = "<img src='../../img/atencao.png' style='width:24px;' title='Mensalidades Pendentes!'>";
+                        } else {
+                            $srcImg = "<img src='../img/atencao.png' style='width:24px;' title='Mensalidades Pendentes!'>";
+                        }    
+                    }
+               }
+            }
+
+             $response = ['warning' => 0, 'success' => 1, 'error' => 0 ,'message' => null ,'srcImg' => $srcImg];
+             echo json_encode($response);
+
+        } else {
+            $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => 'Não foi possivel identificar o ID do usuário'];
+            echo json_encode($response);
+        }
     }
 
  } else if($_SERVER['REQUEST_METHOD'] === 'POST'){
-
+    
  }

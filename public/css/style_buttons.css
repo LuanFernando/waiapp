@@ -167,3 +167,31 @@
     justify-content: center;
     background-color: #d54d52;
 }
+
+.btn-Gerar {
+    padding: 12px;
+    border: 1px solid #6885c1;
+    border-radius: 5px;
+    background: #6885c1;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; 
+}
+
+.btn-Gerar:hover {
+    background-color: #2d67df;
+}
+
+.btn-Cancelar {
+    padding: 12px;
+    border: 1px solid #d54d52;
+    border-radius: 5px;
+    background: #d54d52;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; 
+}
+
+.btn-Cancelar:hover {
+    background-color: #eb1921;
+}

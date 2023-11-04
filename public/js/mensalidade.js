@@ -2,6 +2,7 @@ const modalMensalidade = document.getElementById('modalMensalidade');
 const btnMensalidadeClose = document.getElementById('btnMensalidadeClose');
 const urlFinanceiro = '../manager/FinanceManager.php';
 const urlFinanceiroResumo = '../../manager/FinanceManager.php';
+const modalGerarMensalidade = document.getElementById('modalGerarMensalidade');
 
 
 function mensalidadeUser(id)
@@ -23,9 +24,13 @@ function carregaInformecoesMensalidadesAluno(id)
 
     if(document.getElementById('modal-users-resumo')){
         chamaFetchGenerica(id, urlFinanceiroResumo);
+        verificaPendenciasAluno(id,urlFinanceiroResumo,'resumo');
     } else {
         chamaFetchGenerica(id, urlFinanceiro);
+        verificaPendenciasAluno(id,urlFinanceiro,'dashboard');
     }
+
+    
 }
 
 function chamaFetchGenerica(id, url)
@@ -72,6 +77,32 @@ function chamaFetchGenerica(id, url)
 }
 
 
+function verificaPendenciasAluno(id, url, pagina)
+{
+    fetch(url+'?action=alertaPendencia&idAluno='+id+'&pagina='+pagina)
+    .then(response => {
+        if(!response.ok){
+            throw new Error ('Falha na requisição');
+        }
+        return response.json();
+    })
+    .then(data => {
+
+        if(data.success == 1 && data.warning == 0 && data.error == 0){
+            if(data.srcImg != '' && data.srcImg != null){
+                document.getElementById('alerta-pendencia').innerHTML = data.srcImg;
+            }
+        }else if(data.success == 0 && data.warning == 1 && data.error == 0){
+            alert(data.message);
+        }else if(data.success == 0 && data.warning == 0 && data.error == 1){
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.log(error);
+    })
+}
+
 function limpaMensalidade()
 {
     document.getElementById('selectYearMensal').innerHTML = '';
@@ -85,6 +116,10 @@ function limpaMensalidade()
 
     if(document.getElementById('divTable-mensalidade')){
         document.getElementById('divTable-mensalidade').innerHTML = '';
+    }
+
+    if(document.getElementById('alerta-pendencia')){
+        document.getElementById('alerta-pendencia').innerHTML = '';
     }
 }
 
@@ -131,4 +166,11 @@ function carregaMensalidadePorAno(ano, idAluno,url)
             console.log(error);
         })
     }
+}
+
+if(document.getElementById('btnGerarMensalidade')){
+    document.getElementById('btnGerarMensalidade').addEventListener('click', function(){
+        // alert(document.getElementById('idAlunoMensalidade').value)
+        modalGerarMensalidade.showModal();
+    })
 }
