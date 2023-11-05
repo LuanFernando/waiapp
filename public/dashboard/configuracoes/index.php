@@ -22,6 +22,7 @@ include_once('../../config.env.php');
     <link rel="stylesheet" href="../../css/style_dashboard.css">
     <link rel="stylesheet" href="../../css/style_buttons.css">
     <link rel="stylesheet" href="../../css/style_modal_loggoff.css">
+    <link rel="stylesheet" href="../../css/style_modal_loading.css">
 </head>
 <body>
     
@@ -34,6 +35,9 @@ include_once('../../config.env.php');
         <!-- <div class="card-resumo"></div> -->
         <!-- <div class="card-resumo"></div> -->
     </div>
+
+    <!-- JS -->
+    <script src="../../js/loading.js?v=1.1"></script>
 
 </body>
 </html>

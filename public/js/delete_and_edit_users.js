@@ -19,6 +19,7 @@ const btnDeleteUserNo  = document.getElementById('btnDeleteUserNo');
 
 function confirmDeleteUser(id)
 {
+    beforeSendFunction('show');
     if(id == 0 || id == "" || id == undefined || id == null)
     {
         alert('Não foi possivel identificar o ID do usuário!');
@@ -30,6 +31,7 @@ function confirmDeleteUser(id)
     }
 
     modalDeleteUser.showModal();
+    beforeSendFunction('hide');
 }
 
 btnDeleteUserYes.addEventListener('click', function(){
@@ -62,6 +64,7 @@ function deleteUser()
         return false;
     }
 
+    beforeSendFunction('show');
 
     fetch(urlDeleteUser+'?action=delete&id='+id)
     .then(response => {
@@ -71,8 +74,8 @@ function deleteUser()
         return response.json();
     })
     .then(data => {
-        console.log('Resultado da solicitação: '+data);
-
+        
+        beforeSendFunction('hide');
         if(data.success == 1 && data.warning == 0 && data.error == 0){
             
             // atualiza a tabela de usuers.
@@ -153,6 +156,8 @@ function editUser(id)
 
     document.getElementById('id-user-edit').value = id;
 
+    beforeSendFunction('show');
+
     // faz a requisição - abre o formulario
     fetch(urlEditUser+"?action=editUser&id="+id)
     .then(response => {
@@ -163,6 +168,8 @@ function editUser(id)
     })
     .then(data => {
         console.log(data);
+
+        beforeSendFunction('hide');
 
         if(data.success == 1 && data.name != ''){
 

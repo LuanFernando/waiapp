@@ -15,6 +15,15 @@ if(document.getElementById('modal-users-resumo')){
     urlGerarMensalidade = "../manager/FinanceManager.php";
 }
 
+if(document.getElementById('dataVencimentoMensalidadeGerar')){
+    // limitando para que o usuario não possa selecionar datas anteriores a atual.
+    var dataVencimentoMensalidadeGeraMin = document.getElementById('dataVencimentoMensalidadeGerar');
+    var dataMinima = new Date();
+    dataMinima.setDate(dataMinima.getDate()); // + 7 incrementará dias
+    var dataMinimaFormatada = dataMinima.toISOString().slice(0, 16);
+    dataVencimentoMensalidadeGeraMin.setAttribute('min', dataMinimaFormatada);
+}
+
 numMensalidadeGerar.addEventListener('input', function(){
     const valor = parseInt(numMensalidadeGerar.value);
     if(isNaN(valor) || valor < 1){
@@ -86,9 +95,11 @@ btnGerarMensalidadeGerar.addEventListener('click', function(){
         if(data.success == 1 && data.warning == 0 && data.error == 0){
             alert(data.message);
             modalQuestionGerarMensalidade.close();
+            modalGerarMensalidade.close();
             limpaFormGerarMensalidade();
         }  else if(data.success == 0 && data.warning == 1 && data.error == 0) {
             if(data.pendencias == 1){
+                modalGerarMensalidade.close();
                 modalQuestionGerarMensalidade.showModal();
             }else{
                 alert(data.message);

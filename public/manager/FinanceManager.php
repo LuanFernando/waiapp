@@ -229,4 +229,201 @@ include_once('../connection.php');
 
  } else if($_SERVER['REQUEST_METHOD'] === 'POST'){
     
+    // Obtem o corpo da solicitação JSON
+    $dataJson = json_decode(file_get_contents("php://input"), true);
+
+    // Verifica se o JSON foi recebido com sucesso
+    if($dataJson === false){
+        http_response_code(400);//Método erro
+        $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => ''];
+        echo json_encode($response); 
+    }
+
+    if($dataJson['action'] == 'gerarMensalidadeAluno'){
+        $numerMensalidade  = $dataJson['numMensalidade']; 
+        $valorMensalidade  = $dataJson['valorMensalidade'];
+        $dataVencimento    = $dataJson['dataVencimentoBase'];
+        $idAluno           = $dataJson['idAluno']; 
+
+        if(empty($numerMensalidade) || empty($valorMensalidade) || empty($dataVencimento) || empty($idAluno) ){
+            $response = ['warning' => 1, 'error' => 0, 'success' => 0, 'message' => 'Não foi possivel gerar novas mensalidades, verifique o formulário!'];
+            echo json_encode($response);
+            
+        }else{
+
+            # valida os valores de entrada
+            if($numerMensalidade == 0 || $numerMensalidade > 12 || $numerMensalidade == null){
+                $response = ['warning' => 1, 'error' => 0, 'success' => 0, 'message' => 'Número de parcelas é inválido!'];
+                echo json_encode($response);
+                
+            }
+
+            # valida data da primeira mensalidade.
+            $dataISO1 = $dataVencimento;
+            $dataISO2 = date('c'); // data atual
+            $timestamp1 = strtotime($dataISO1);
+            $timestamp2 = strtotime($dataISO2);
+
+            if($dataVencimento == '' || $dataVencimento == null){
+                $response = ['warning' => 1, 'error' => 0, 'success' => 0, 'message' => 'A data fornecida é inválida!'];
+                echo json_encode($response);
+                
+            }
+
+            if($timestamp1 < $timestamp2){
+                $response = ['warning' => 1, 'error' => 0, 'success' => 0, 'message' => 'A data fornecida é inválida (data antiga)!'];
+                echo json_encode($response);
+                
+            }
+
+            # valor 
+            $valorFormatoSave = str_replace(',' , '.', $valorMensalidade);
+            if(floatval($valorFormatoSave) <= 0 ||  floatval($valorFormatoSave) >= 100000){
+                $response = ['warning' => 1, 'error' => 0, 'success' => 0, 'message' => "O valor R$ {$valorMensalidade} da mensalidade informado é inválido!"];
+                echo json_encode($response);
+                
+            }
+
+            # resgata a última data de vencimento gereda para o aluno.
+
+            try {
+                $stmt = $conn->prepare("SELECT DATE_FORMAT(dataVencimento, '%Y-%m-%d') AS ultimaDataVencimento, id
+                                        FROM monthly_payment
+                                        WHERE idAluno = ?
+                                        ORDER BY id DESC
+                                        LIMIT 1;
+                                        ");
+
+                // Vincular os parâmetros
+                $stmt->bind_param("i", $idAluno);
+
+                // Executar a consulta
+                $stmt->execute();
+            
+            } catch (\Exception $e) {
+                echo $e;
+            }
+
+            // Obter resultados
+            $ultimaDataVencimento = "";
+            $result = $stmt->get_result();
+            if($result != null){
+                while ($row = $result->fetch_assoc()) {
+                    $ultimaDataVencimento = $row['ultimaDataVencimento'];
+                }
+            }
+
+            $totalMensalidadesGeradas = 0;
+            $totalMensalidadesNaoGeradas = 0;
+            $dataAtualAux2 = date('Y-m-d');
+            $timestamp3 = strtotime($dataAtualAux2);
+            $timestamp4 = strtotime($ultimaDataVencimento);
+
+            if($ultimaDataVencimento == "" || ($timestamp3 < $timestamp4)){
+                // Gera as parcelas normais usando a data selecionada pelo usuario.
+                $nMes = 0;
+                for ($i=0; $i < $numerMensalidade ; $i++) { 
+                    $nMes++;
+                    try {
+                        $dataAux =  new Datetime("{$dataVencimento}");
+                        $dataAux->add(new DateInterval("P{$nMes}M"));
+                        $dataVencimentoMensalidade = $dataAux->format('Y-m-d H:i:s');
+
+                        $stmt =  $conn->prepare("INSERT INTO monthly_payment(idAluno,valor,dataVencimento,status_pagamento) 
+                        VALUES(? , ?, ?,'pendente')");
+                        $stmt->bind_param("iis", $idAluno, $valorFormatoSave, $dataVencimentoMensalidade);
+            
+                        if($stmt->execute()){
+                            $totalMensalidadesGeradas++;
+                        }else{
+                            $totalMensalidadesNaoGeradas++;
+                        }
+
+                    } catch (\Exception $e) {
+                        echo $e;
+                    }
+                }
+
+                $response = [
+                'warning' => 0, 
+                'error' => 0, 
+                'success' => 1, 
+                'message' => "Mensalidades geradas com sucesso. Geradas: {$totalMensalidadesGeradas} Não Geradas: {$totalMensalidadesNaoGeradas}"];
+                echo json_encode($response);
+               
+
+            } else if($ultimaDataVencimento != "" && ($timestamp4 < $timestamp3)){
+                // Data atual é menor que a ultima data de vencimento gerada para o aluno
+
+                $quantidadeMensalidadePendentes = 0;
+
+                # valida quantas mensalidades podem ser geradas para não passar o limite de 12 pendentes.
+                # quantas mensalidades tem data de vencimento superior a data atual.
+                try {
+                    $stmt3 = $conn->prepare("SELECT COUNT(id) AS totalRegistros
+                    FROM monthly_payment
+                    WHERE idAluno = ? AND dataVencimento > CURDATE() AND status_pagamento = 'pendente';
+                    ");
+    
+                    // Vincular os parâmetros
+                    $stmt3->bind_param("i", $idAluno);
+    
+                    // Executar a consulta
+                    $stmt3->execute();
+                
+                } catch (\Exception $e) {
+                    echo $e;
+                }
+               
+                $result3 = $stmt3->get_result();
+                if($result3 != null){
+                    while ($row = $result3->fetch_assoc()) {
+                        $quantidadeMensalidadePendentes = $row['totalRegistros'];
+                    }
+                }
+                
+                // Gera as parcelas apos a ultima data de vencimento.
+                $nMes = 0;
+                $somaMensalidades = ($quantidadeMensalidadePendentes + $numerMensalidade);
+
+                if($somaMensalidades > 12){
+                    // retorna a diferença que deve ser gerada as mensalidades.
+                    $numerMensalidade = (12 - $numerMensalidade);    
+                }
+                
+                for ($i=0; $i < $numerMensalidade ; $i++) { 
+                    $nMes++;
+                    try {
+                        $dataAux =  new Datetime("{$ultimaDataVencimento} 00:00:00");
+                        $dataAux->add(new DateInterval("P{$nMes}M"));
+                        $dataVencimentoMensalidade = $dataAux->format('Y-m-d H:i:s');
+
+                        $stmt =  $conn->prepare("INSERT INTO monthly_payment(idAluno,valor,dataVencimento,status_pagamento) 
+                        VALUES(? , ?, ?,'pendente')");
+                        $stmt->bind_param("iis", $idAluno, $valorFormatoSave, $dataVencimentoMensalidade);
+            
+                        if($stmt->execute()){
+                            $totalMensalidadesGeradas++;
+                        }else{
+                            $totalMensalidadesNaoGeradas++;
+                        }
+
+                    } catch (\Exception $e) {
+                        echo $e;
+                    }
+                }
+
+                $response = [
+                'warning' => 0, 
+                'error' => 0, 
+                'success' => 1, 
+                'message' => "Mensalidades geradas com sucesso. Geradas: {$totalMensalidadesGeradas} Não Geradas: {$totalMensalidadesNaoGeradas}"];
+                echo json_encode($response);
+                
+            }
+                      
+        }
+
+    }
+
  }

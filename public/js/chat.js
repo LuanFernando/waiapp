@@ -13,10 +13,13 @@ if(document.getElementById('modal-users-resumo')){
 
 checkInput();
 
-function chat(id){    
+function chat(id){  
+    
+    beforeSendFunction('show');
     document.getElementById('id-destino').value = id;
     modalChat.showModal();
     getMessage(id);
+    beforeSendFunction('hide');
 }
 
 btnChatClose.addEventListener('click', function(){

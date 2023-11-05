@@ -4,6 +4,8 @@ const urlCardDietasDashboard = '../manager/DietManager.php';
 const urlCardTreinosDashboard = '../manager/TrainingManager.php';
 const urlCardProdutosDashboard = '../manager/ProductManager.php';
 
+beforeSendFunction('show');
+
 // total usuarios
 fetch(urlCardUserDashboard)
 .then(response => {
@@ -13,8 +15,9 @@ fetch(urlCardUserDashboard)
     return response.json();// Se você espera uma resposta JSON
 })
 .then(data => {
-    console.log('Resposta da solicitação GET:', data);
 
+    beforeSendFunction('hide');
+    
     if(document.getElementById('qnt-usuario')){
         document.getElementById('qnt-usuario').textContent = data.totalUsers;
     }
@@ -22,3 +25,4 @@ fetch(urlCardUserDashboard)
 .catch(error => {
     console.log('Erro:', error);
 });
+

@@ -23,6 +23,7 @@ include_once('../../config.env.php');
     <link rel="stylesheet" href="../../css/style_modals.css">
     <link rel="stylesheet" href="../../css/style_buttons.css">
     <link rel="stylesheet" href="../../css/style_modal_loggoff.css">
+    <link rel="stylesheet" href="../../css/style_modal_loading.css">
     <link rel="stylesheet" href="../../css/style_modal_delete_user.css">
     <link rel="stylesheet" href="../../css/style_chat.css">
     <link rel="stylesheet" href="../../css/style_mensalidade.css">
@@ -90,6 +91,7 @@ include_once('../../config.env.php');
 
     <!-- JS -->
     <script src="../../js/modals_dashboard.js?v=1.1"></script>
+    <script src="../../js/loading.js?v=1.1"></script>
     <script src="../../js/resumo.js?v=1.1"></script>
 </body>
 </html>

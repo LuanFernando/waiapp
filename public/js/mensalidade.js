@@ -35,7 +35,7 @@ function carregaInformecoesMensalidadesAluno(id)
 
 function chamaFetchGenerica(id, url)
 {
-    console.log(url+'?action=infoMensalidade&idAluno='+id)
+    beforeSendFunction('show');
     fetch(url+'?action=infoMensalidade&idAluno='+id)
     .then(response => {
         if(!response.ok){
@@ -44,8 +44,8 @@ function chamaFetchGenerica(id, url)
         return response.json();
     })
     .then(data => {
-        console.log(data);
-
+        
+        beforeSendFunction('hide');
         if(data.success == 1 && data.warning == 0 && data.error == 0){
 
             console.log(data.optionYear)
@@ -79,6 +79,7 @@ function chamaFetchGenerica(id, url)
 
 function verificaPendenciasAluno(id, url, pagina)
 {
+    beforeSendFunction('show');
     fetch(url+'?action=alertaPendencia&idAluno='+id+'&pagina='+pagina)
     .then(response => {
         if(!response.ok){
@@ -87,10 +88,11 @@ function verificaPendenciasAluno(id, url, pagina)
         return response.json();
     })
     .then(data => {
-
+        beforeSendFunction('hide');
         if(data.success == 1 && data.warning == 0 && data.error == 0){
             if(data.srcImg != '' && data.srcImg != null){
                 document.getElementById('alerta-pendencia').innerHTML = data.srcImg;
+                document.getElementById('btnGerarMensalidade').style.display = 'none';
             }
         }else if(data.success == 0 && data.warning == 1 && data.error == 0){
             alert(data.message);
@@ -121,6 +123,10 @@ function limpaMensalidade()
     if(document.getElementById('alerta-pendencia')){
         document.getElementById('alerta-pendencia').innerHTML = '';
     }
+
+    if(document.getElementById('btnGerarMensalidade')){
+        document.getElementById('btnGerarMensalidade').style.display = 'block';
+    }
 }
 
 if(document.getElementById('selectYearMensal')){
@@ -142,6 +148,8 @@ if(document.getElementById('selectYearMensal')){
 function carregaMensalidadePorAno(ano, idAluno,url)
 {
     if(ano != '' && idAluno != '' && url != ''){
+        beforeSendFunction('show');
+
         fetch(url+'?action=mensalidadePorAno&ano='+ano+'&idAluno='+idAluno)
         .then(response => {
             if(!response.ok){
@@ -151,7 +159,8 @@ function carregaMensalidadePorAno(ano, idAluno,url)
         })
         .then(data => {
             console.log(data);
-
+            
+            beforeSendFunction('hide');
             if(data.success == 1 && data.warning == 0 && data.error == 0){
                 if(data.table != ''){
                     document.getElementById('divTable-mensalidade').innerHTML = data.table;
@@ -170,7 +179,6 @@ function carregaMensalidadePorAno(ano, idAluno,url)
 
 if(document.getElementById('btnGerarMensalidade')){
     document.getElementById('btnGerarMensalidade').addEventListener('click', function(){
-        // alert(document.getElementById('idAlunoMensalidade').value)
         modalGerarMensalidade.showModal();
     })
 }

@@ -2,6 +2,7 @@
 
 <?php
     include_once('modal-loggoff.php');
+    include_once('modal-loading.php');
 
     // Só incluirá o modal-delete-user , nas páginas de dahboard, resumo
     if(strpos($pagina_atual, 'dashboard') !== false && !strpos($pagina_atual, 'configuracoes') !== false && !strpos($pagina_atual, 'resumo') !== false){

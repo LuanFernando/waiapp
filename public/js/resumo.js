@@ -1,6 +1,8 @@
 
 const urlCardUserDashboard = '../../manager/UserManager.php?action=quantResumoUsuario';
 
+beforeSendFunction('show');
+
 // total usuarios
 fetch(urlCardUserDashboard)
 .then(response => {
@@ -10,8 +12,8 @@ fetch(urlCardUserDashboard)
     return response.json();// Se você espera uma resposta JSON
 })
 .then(data => {
-    console.log('Resposta da solicitação GET:', data);
-
+    beforeSendFunction('hide');
+    
     if(document.getElementById('qnt-usuario')){
         document.getElementById('qnt-usuario').textContent = data.totalUsers;
     }

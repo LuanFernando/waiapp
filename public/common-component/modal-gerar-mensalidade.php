@@ -13,7 +13,7 @@
                 <input type="text" id="valorMensalidadeGerar" name="valorMensalidadeGerar" value="0,00">
             </div>
             <div class="modal-gerar-mensalidade-form">
-                <label for="">Data do Vencimento(Data base):</label>
+                <label for="">Data Primeira Mensalidade:</label>
                 <input type="datetime-local" name="dataVencimentoMensalidadeGerar" id="dataVencimentoMensalidadeGerar">
             </div>
         </div>
