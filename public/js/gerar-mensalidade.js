@@ -97,6 +97,7 @@ btnGerarMensalidadeGerar.addEventListener('click', function(){
             modalQuestionGerarMensalidade.close();
             modalGerarMensalidade.close();
             limpaFormGerarMensalidade();
+            carregaInformecoesMensalidadesAluno(document.getElementById('idAlunoMensalidade').value);
         }  else if(data.success == 0 && data.warning == 1 && data.error == 0) {
             if(data.pendencias == 1){
                 modalGerarMensalidade.close();
