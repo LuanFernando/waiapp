@@ -284,7 +284,7 @@ include_once('../connection.php');
                 
             }
 
-            # resgata a última data de vencimento gereda para o aluno.
+            # resgata a última data de vencimento gerada para o aluno.
 
             try {
                 $stmt = $conn->prepare("SELECT DATE_FORMAT(dataVencimento, '%Y-%m-%d') AS ultimaDataVencimento, id
@@ -319,11 +319,11 @@ include_once('../connection.php');
             $timestamp3 = strtotime($dataAtualAux2);
             $timestamp4 = strtotime($ultimaDataVencimento);
 
-            if($ultimaDataVencimento == "" || ($timestamp3 < $timestamp4)){
+            if($ultimaDataVencimento == "" || ($timestamp3 >= $timestamp4)){
                 // Gera as parcelas normais usando a data selecionada pelo usuario.
                 $nMes = 0;
                 for ($i=0; $i < $numerMensalidade ; $i++) { 
-                    $nMes++;
+                    
                     try {
                         $dataAux =  new Datetime("{$dataVencimento}");
                         $dataAux->add(new DateInterval("P{$nMes}M"));
@@ -342,6 +342,7 @@ include_once('../connection.php');
                     } catch (\Exception $e) {
                         echo $e;
                     }
+                    $nMes++;
                 }
 
                 $response = [
@@ -352,7 +353,7 @@ include_once('../connection.php');
                 echo json_encode($response);
                
 
-            } else if($ultimaDataVencimento != "" && ($timestamp4 < $timestamp3)){
+            } else if($ultimaDataVencimento != "" && ($timestamp4 > $timestamp3)){
                 // Data atual é menor que a ultima data de vencimento gerada para o aluno
 
                 $quantidadeMensalidadePendentes = 0;
@@ -383,16 +384,16 @@ include_once('../connection.php');
                 }
                 
                 // Gera as parcelas apos a ultima data de vencimento.
-                $nMes = 0;
+                $nMes = 1;
                 $somaMensalidades = ($quantidadeMensalidadePendentes + $numerMensalidade);
 
                 if($somaMensalidades > 12){
                     // retorna a diferença que deve ser gerada as mensalidades.
-                    $numerMensalidade = (12 - $numerMensalidade);    
+                    $numerMensalidade = (12 - $quantidadeMensalidadePendentes);    
                 }
                 
                 for ($i=0; $i < $numerMensalidade ; $i++) { 
-                    $nMes++;
+                    
                     try {
                         $dataAux =  new Datetime("{$ultimaDataVencimento} 00:00:00");
                         $dataAux->add(new DateInterval("P{$nMes}M"));
@@ -411,6 +412,7 @@ include_once('../connection.php');
                     } catch (\Exception $e) {
                         echo $e;
                     }
+                    $nMes++;
                 }
 
                 $response = [
