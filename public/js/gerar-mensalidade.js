@@ -64,6 +64,7 @@ btnFecharQuestionGerarMensalidade.addEventListener('click', function(){
 btnGerarMensalidadeGerar.addEventListener('click', function(){
     if(!validaFormGerarMensalidade()){
         alert('Atenção: Preencha todos os campos!')
+        return false;
     }
 
     var dataForm = {
@@ -82,6 +83,8 @@ btnGerarMensalidadeGerar.addEventListener('click', function(){
         body : JSON.stringify(dataForm) // Converte dados em JSON
     }
 
+    beforeSendFunction('show');
+
     fetch(urlGerarMensalidade,options)
     .then(response => {
         if(!response.ok){
@@ -90,8 +93,8 @@ btnGerarMensalidadeGerar.addEventListener('click', function(){
         return response.json();
     })
     .then(data => {
-        console.log(data);
 
+        beforeSendFunction('hide');
         if(data.success == 1 && data.warning == 0 && data.error == 0){
             alert(data.message);
             modalQuestionGerarMensalidade.close();
