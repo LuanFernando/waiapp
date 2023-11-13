@@ -41,3 +41,4 @@
 <script src="../../js/chat.js?v=1.1"></script>
 <script src="../../js/mensalidade.js?v=1.1"></script>
 <script src="../../js/gerar-mensalidade.js?v=1.1"></script>
+<script src="../../js/atalhos.js?v=1.1"></script>

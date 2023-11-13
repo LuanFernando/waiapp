@@ -59,6 +59,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
 
         $response = ['listUsers' => $tableUsers];
         echo json_encode($response);
+        return;
 
     } else if($_GET['action'] == 'listUsersCurrent'){
         $tableUsers = "";
@@ -110,6 +111,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
 
         $response = ['listUsers' => $tableUsers];
         echo json_encode($response);
+        return;
     } else if($_GET['action'] == 'quantResumoUsuario') {
         $query = "SELECT COUNT(Id) AS totalUsers FROM user WHERE CURDATE() = DATE(created)";
         $result  = $conn->query($query);
@@ -117,6 +119,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
     
         $response = ['totalUsers' =>  $totalUsers['totalUsers']];
         echo json_encode($response);
+        return;
     } else  if($_GET['action'] == 'delete'){
 
         $deleted = date('Y-m-d H:i:s'); // data e hora atual
@@ -133,15 +136,18 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
                 http_response_code(200); //success
                 $response = ['warning' => 0, 'error' => 0, 'success' => 1, 'message' => "Usuário deletado com sucesso."];
                 echo json_encode($response);
+                return;
             }else{
                 http_response_code(400); // error
                 $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => 'Não foi possivel deletar o usuário, algo deu errado!'];
                 echo json_encode($response);
+                return;
             }
 
         } else {
             $response = ['success' => 0, 'warning' => 0,'error' => 1, 'message' => 'O ID do usuário é invalido!'];
             echo json_encode($response);
+            return;
         }
     } else if($_GET['action'] == 'editUser'){
         $id = $_GET['id'];
@@ -166,14 +172,17 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
                     'student' => ($row['student'] != null ? $row['student'] : 'N')
                 ];
                 echo json_encode($response);
+                return;
             } else{
                 $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => 'Não foi possivel identificar o ID do usuário!'];
                 echo json_encode($response);
+                return;
             }
 
         }else{
             $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => 'Não foi possivel identificar o ID do usuário!'];
             echo json_encode($response);
+            return;
         }
 
     }else{
@@ -183,6 +192,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
     
         $response = ['totalUsers' =>  $totalUsers['totalUsers']];
         echo json_encode($response);
+        return;
     }
 
 } else if($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -195,6 +205,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
         http_response_code(400);//Método erro
         $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => ''];
         echo json_encode($response); 
+        return;
     }
 
     if($dataJson['action'] == 'newUser'){
@@ -207,6 +218,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
         if(empty($name) || empty($email) || empty($student) || empty($password) ){
             $response = ['warning' => 1, 'error' => 0, 'success' => 0, 'message' => 'Não foi possivel criar o usuário, verifique o formulário!'];
             echo json_encode($response);
+            return;
         }else{
 
             $token = uniqid(); // gera um token unico
@@ -221,10 +233,12 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
                 http_response_code(200); //success
                 $response = ['warning' => 0, 'error' => 0, 'success' => 1, 'message' => "Usuário {$name} criado com sucesso."];
                 echo json_encode($response);
+                return;
             }else{
                 http_response_code(400); // error
                 $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => 'Não foi possivel criar o usuário, algo deu errado!'];
                 echo json_encode($response);
+                return;
             }
         }
 
@@ -240,6 +254,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
         if(empty($name) || empty($email) || empty($student) || empty($password) ){
             $response = ['warning' => 1, 'error' => 0, 'success' => 0, 'message' => 'Não foi possivel atualizar o usuário, verifique o formulário!'];
             echo json_encode($response);
+            return;
         }else{
 
             $token = uniqid(); // gera um token unico
@@ -257,15 +272,18 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
                     http_response_code(200); //success
                     $response = ['warning' => 0, 'error' => 0, 'success' => 1, 'message' => "Usuário atualizado com sucesso."];
                     echo json_encode($response);
+                    return;
                 }else{
                     http_response_code(400); // error
                     $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => 'Não foi possivel atualizar o usuário, algo deu errado!'];
                     echo json_encode($response);
+                    return;
                 }
     
             } else {
                 $response = ['success' => 0, 'warning' => 0,'error' => 1, 'message' => 'O ID do usuário é invalido!'];
                 echo json_encode($response);
+                return;
             }
                 
         }
@@ -275,6 +293,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
         $data = json_decode(file_get_contents("php://input"), true);
         $response = ['message' => 'Solicitação POST para endpoint', 'data' => $data ];
         echo json_encode($response);
+        return;
     }
 
 } else if($_SERVER['REQUEST_METHOD'] === 'DELETE') {
@@ -283,4 +302,5 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
     http_response_code(405);//Método não permitido
     $response = ['message' => 'Método não permitido'];
     echo json_encode($response);
+    return;
 }

@@ -51,7 +51,6 @@ btnSendLikeMessage.addEventListener('click', function(){
         return response.json();
     })
     .then(data => {
-        console.log(data);
         
         if(data.success == 1 && data.warning == 0 && data.error == 0){
             // limpa input
@@ -101,7 +100,6 @@ btnSendMessage.addEventListener('click', function(){
             return response.json();
         })
         .then(data => {
-            console.log(data);
             
             if(data.success == 1 && data.warning == 0 && data.error == 0){
                 // limpa input
@@ -147,7 +145,6 @@ btnSendDesLikeMessage.addEventListener('click', function(){
         return response.json();
     })
     .then(data => {
-        console.log(data);
         
         if(data.success == 1 && data.warning == 0 && data.error == 0){
             // limpa input
@@ -194,7 +191,6 @@ function validateInput(){
 
 function getMessage(id)
 {
-    console.log(isResumo)
     // Processa as mensagens
     fetch(urlChatMessage+"?action=messages&id="+id+"&resumo="+isResumo)
     .then(response => {

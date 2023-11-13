@@ -30,7 +30,19 @@ include_once('../connection.php');
                     $stmt->execute();
                 
                 } catch (\Exception $e) {
-                    echo $e;
+                    // echo $e;
+                    $response = [
+                        'warning' => 0, 
+                        'error' => 1, 
+                        'success' => 0, 
+                        'message' => 'Erro: '.$e,
+                        'optionYear' => null,
+                        'pago' => 0,
+                        'pendente' => 0,
+                        'desconto' => 0
+                    ];
+                    echo json_encode($response);
+                    return;
                 }
 
                 // Obter resultados
@@ -76,6 +88,7 @@ include_once('../connection.php');
                         'desconto' => 'R$ '.number_format($desconto, 2 , ',' , '.')
                     ];
                     echo json_encode($response);
+                    return;
                 } else{
                     $optionYear = "<option value=''></option>";
     
@@ -91,11 +104,13 @@ include_once('../connection.php');
                         'desconto' => 0
                     ];
                     echo json_encode($response);
+                    return;
                 }
 
         } else {
             $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => 'Não foi possivel identificar o ID do usuário!'];
             echo json_encode($response);
+            return;
         }
     } else if($_GET['action'] == 'mensalidadePorAno'){
         $idAluno = $_GET['idAluno'];
@@ -127,6 +142,9 @@ include_once('../connection.php');
             
             } catch (\Exception $e) {
                 echo $e;
+                $response = ['warning' => 0, 'success' => 0, 'error' => 1 ,'message' => 'Erro: '.$e , 'table' => null , 'script' => null];
+                echo json_encode($response);
+                return;
             }
 
              // Obter resultados
@@ -175,10 +193,11 @@ include_once('../connection.php');
 
              $response = ['warning' => 0, 'success' => 1, 'error' => 0 ,'message' => null , 'table' => $table , 'script' => null];
              echo json_encode($response);
-
+             return;
         } else{
             $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => 'Não foi possivel identificar o ID do usuário!'];
             echo json_encode($response);
+            return;
         }
     } else if($_GET['action'] == 'alertaPendencia'){
         $idAluno = $_GET['idAluno'];
@@ -198,7 +217,10 @@ include_once('../connection.php');
                 $stmt->execute();
             
             } catch (\Exception $e) {
-                echo $e;
+                // echo $e;
+                $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => 'Erro: '.$e];
+                echo json_encode($response);
+                return;
             }
 
              // Obter resultados
@@ -220,10 +242,11 @@ include_once('../connection.php');
 
              $response = ['warning' => 0, 'success' => 1, 'error' => 0 ,'message' => null ,'srcImg' => $srcImg];
              echo json_encode($response);
-
+             return;
         } else {
             $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => 'Não foi possivel identificar o ID do usuário'];
             echo json_encode($response);
+            return;
         }
     }
 
@@ -237,8 +260,10 @@ include_once('../connection.php');
         http_response_code(400);//Método erro
         $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => ''];
         echo json_encode($response); 
+        return;
     }
 
+    
     if($dataJson['action'] == 'gerarMensalidadeAluno'){
         $numerMensalidade  = $dataJson['numMensalidade']; 
         $valorMensalidade  = $dataJson['valorMensalidade'];
@@ -248,14 +273,14 @@ include_once('../connection.php');
         if(empty($numerMensalidade) || empty($valorMensalidade) || empty($dataVencimento) || empty($idAluno) ){
             $response = ['warning' => 1, 'error' => 0, 'success' => 0, 'message' => 'Não foi possivel gerar novas mensalidades, verifique o formulário!'];
             echo json_encode($response);
-            
+            return;
         }else{
 
             # valida os valores de entrada
             if($numerMensalidade == 0 || $numerMensalidade > 12 || $numerMensalidade == null){
                 $response = ['warning' => 1, 'error' => 0, 'success' => 0, 'message' => 'Número de parcelas é inválido!'];
                 echo json_encode($response);
-                
+                return;
             }
 
             # valida data da primeira mensalidade.
@@ -267,13 +292,21 @@ include_once('../connection.php');
             if($dataVencimento == '' || $dataVencimento == null){
                 $response = ['warning' => 1, 'error' => 0, 'success' => 0, 'message' => 'A data fornecida é inválida!'];
                 echo json_encode($response);
-                
+                return;
             }
 
             if($timestamp1 < $timestamp2){
-                $response = ['warning' => 1, 'error' => 0, 'success' => 0, 'message' => 'A data fornecida é inválida (data antiga)!'];
-                echo json_encode($response);
-                
+
+                $data1 = getdate($timestamp1);
+                $data2 = getdate($timestamp20);
+
+                // Compara para ver se os timestamp são referentes ao mesmo dia
+                if($data1['year'] != $data2['year'] || $data1['mon'] != $data2['mon'] || $data1['mday'] != $data2['mday']){
+                    // Os timestamp são de dias diferentes
+                    $response = ['warning' => 1, 'error' => 0, 'success' => 0, 'message' => 'A data fornecida é inválida (data antiga)!'];
+                    echo json_encode($response);
+                    return;
+                }
             }
 
             # valor 
@@ -281,7 +314,7 @@ include_once('../connection.php');
             if(floatval($valorFormatoSave) <= 0 ||  floatval($valorFormatoSave) >= 100000){
                 $response = ['warning' => 1, 'error' => 0, 'success' => 0, 'message' => "O valor R$ {$valorMensalidade} da mensalidade informado é inválido!"];
                 echo json_encode($response);
-                
+                return;
             }
 
             # resgata a última data de vencimento gerada para o aluno.
@@ -301,7 +334,14 @@ include_once('../connection.php');
                 $stmt->execute();
             
             } catch (\Exception $e) {
-                echo $e;
+                // echo $e;
+                $response = [
+                        'warning' => 0, 
+                        'error' => 1, 
+                        'success' => 0, 
+                        'message' => "Erro: ".$e];
+                        echo json_encode($response);
+                        return;
             }
 
             // Obter resultados
@@ -317,9 +357,10 @@ include_once('../connection.php');
             $totalMensalidadesNaoGeradas = 0;
             $dataAtualAux2 = date('Y-m-d');
             $timestamp3 = strtotime($dataAtualAux2);
-            $timestamp4 = strtotime($ultimaDataVencimento);
+            $timestamp4 = ($ultimaDataVencimento != '' ? strtotime($ultimaDataVencimento) : '');
 
             if($ultimaDataVencimento == "" || ($timestamp3 >= $timestamp4)){
+
                 // Gera as parcelas normais usando a data selecionada pelo usuario.
                 $nMes = 0;
                 for ($i=0; $i < $numerMensalidade ; $i++) { 
@@ -331,7 +372,7 @@ include_once('../connection.php');
 
                         $stmt =  $conn->prepare("INSERT INTO monthly_payment(idAluno,valor,dataVencimento,status_pagamento) 
                         VALUES(? , ?, ?,'pendente')");
-                        $stmt->bind_param("iis", $idAluno, $valorFormatoSave, $dataVencimentoMensalidade);
+                        $stmt->bind_param("ids", $idAluno, $valorFormatoSave, $dataVencimentoMensalidade);
             
                         if($stmt->execute()){
                             $totalMensalidadesGeradas++;
@@ -340,7 +381,14 @@ include_once('../connection.php');
                         }
 
                     } catch (\Exception $e) {
-                        echo $e;
+                        // echo $e;
+                        $response = [
+                            'warning' => 0, 
+                            'error' => 1, 
+                            'success' => 0, 
+                            'message' => "Erro: ".$e];
+                            echo json_encode($response);
+                            return;
                     }
                     $nMes++;
                 }
@@ -351,7 +399,7 @@ include_once('../connection.php');
                 'success' => 1, 
                 'message' => "Mensalidades geradas com sucesso. Geradas: {$totalMensalidadesGeradas} Não Geradas: {$totalMensalidadesNaoGeradas}"];
                 echo json_encode($response);
-               
+                return;
 
             } else if($ultimaDataVencimento != "" && ($timestamp4 > $timestamp3)){
                 // Data atual é menor que a ultima data de vencimento gerada para o aluno
@@ -363,7 +411,7 @@ include_once('../connection.php');
                 try {
                     $stmt3 = $conn->prepare("SELECT COUNT(id) AS totalRegistros
                     FROM monthly_payment
-                    WHERE idAluno = ? AND dataVencimento > CURDATE() AND status_pagamento = 'pendente';
+                    WHERE idAluno = ? AND dataVencimento >= CURDATE() AND status_pagamento = 'pendente';
                     ");
     
                     // Vincular os parâmetros
@@ -373,7 +421,13 @@ include_once('../connection.php');
                     $stmt3->execute();
                 
                 } catch (\Exception $e) {
-                    echo $e;
+                    // echo $e;
+                    $response = [
+                        'warning' => 0, 
+                        'error' => 1, 
+                        'success' => 0, 
+                        'message' => "Erro: ".$e];
+                        echo json_encode($response);
                 }
                
                 $result3 = $stmt3->get_result();
@@ -401,7 +455,7 @@ include_once('../connection.php');
 
                         $stmt =  $conn->prepare("INSERT INTO monthly_payment(idAluno,valor,dataVencimento,status_pagamento) 
                         VALUES(? , ?, ?,'pendente')");
-                        $stmt->bind_param("iis", $idAluno, $valorFormatoSave, $dataVencimentoMensalidade);
+                        $stmt->bind_param("ids", $idAluno, $valorFormatoSave, $dataVencimentoMensalidade);
             
                         if($stmt->execute()){
                             $totalMensalidadesGeradas++;
@@ -410,18 +464,35 @@ include_once('../connection.php');
                         }
 
                     } catch (\Exception $e) {
-                        echo $e;
+                        // echo $e;
+                        $response = [
+                            'warning' => 0, 
+                            'error' => 1, 
+                            'success' => 0, 
+                            'message' => "Erro: ".$e];
+                            echo json_encode($response);
+                            return;
                     }
                     $nMes++;
                 }
 
-                $response = [
-                'warning' => 0, 
-                'error' => 0, 
-                'success' => 1, 
-                'message' => "Mensalidades geradas com sucesso. Geradas: {$totalMensalidadesGeradas} Não Geradas: {$totalMensalidadesNaoGeradas}"];
-                echo json_encode($response);
-                
+                if($numerMensalidade == 0){
+                    $response = [
+                        'warning' => 0, 
+                        'error' => 0, 
+                        'success' => 1, 
+                        'message' => "Não foi possivel gerar novas mensalidades ,pois existem 12 mensalidades em aberto para o aluno."];
+                        echo json_encode($response);
+                        return;
+                } else {
+                    $response = [
+                    'warning' => 0, 
+                    'error' => 0, 
+                    'success' => 1, 
+                    'message' => "Mensalidades geradas com sucesso. Geradas: {$totalMensalidadesGeradas} Não Geradas: {$totalMensalidadesNaoGeradas}"];
+                    echo json_encode($response);
+                    return;
+                }
             }
                       
         }

@@ -22,6 +22,7 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    gap: 8px;
 }
 
 .modal-big-footer {
@@ -49,3 +50,140 @@
         gap: 8px;
     }
 }
+
+/* media */
+.modal-media {
+    /* position: fixed; */
+    /* top: 50%; */
+    /* left: 50%; */
+    right: 0px;
+    /* transform: translate(-50%, -50%); */
+    background-color: white;
+    padding: 20px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    width: 50%;
+    height: 100%;
+    border: none;
+    margin-top: 70px;
+}
+
+.modal-media-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-media-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.modal-media-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-media-header-title {
+    display: flex;
+}
+
+.modal-media-header-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.list-atalhos {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.atalho {
+    padding: 12px 8px;
+    border-radius: 5px;
+    border: 2px solid #3f4c6b;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.detalhes-pagamento{
+    width: 100%;
+    background: rgba(100, 100, 111, 0.2);
+    height: 350px;
+}
+
+.valores-pagamento{
+    position: fixed;
+    bottom: 56px;
+    width: 100%;
+    background: #3f4c6b;
+    /* height: 150px; */
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btnFinalizarPagamento {
+    height: 60px;
+    padding: 0px 80px;
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    padding: 12px;
+}
+
+.valores{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 100%;
+    gap: 8px;
+}
+
+.input-valores{ 
+    height: 100%;
+    padding: 12px;
+}
+
+.selectedPayment {
+    height: 100%;
+    padding: 12px; 
+}
+
+@media (max-width:1207px){
+    .modal-media {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        right: 0px;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        width: 100%;
+        height: 100%;
+        border: none;
+        margin-top: 70px;
+    }
+    
+    .modal-media-header{
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items:flex-start;
+        gap: 8px;
+    }
+
+    .list-atalhos {
+        display: none;
+    }
+}
+

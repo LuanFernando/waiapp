@@ -36,7 +36,7 @@ numMensalidadeGerar.addEventListener('input', function(){
 // Mascara de reais 
 valorMensalidadeGerar.addEventListener('input', function(){
     // Remove todos os caracteres não númericos
-    let valor = valorMensalidadeGerar.value.replace(/\D/g, '');
+    let valor = valorMensalidadeGerar.value.replace(/\D/g, '').replace(/^0+/, '');
 
     if(valor == 0){
         valor = '0,00';
@@ -74,6 +74,8 @@ btnGerarMensalidadeGerar.addEventListener('click', function(){
         'idAluno' : document.getElementById('idAlunoMensalidade').value, 
         'action' :'gerarMensalidadeAluno'
     }
+
+    console.log(dataForm)
 
     const options = {
         method  : 'POST',

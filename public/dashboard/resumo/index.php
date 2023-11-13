@@ -32,6 +32,8 @@ include_once('../../config.env.php');
 <body>
     
     <?php require('../../common-component/navbar.php'); ?>
+    <?php require('../../common-component/generic-modal-media.php'); ?>
+    <?php require('../../common-component/large-generic-modal.php'); ?>
 
     <div class="content">
     
@@ -90,6 +92,8 @@ include_once('../../config.env.php');
     </div>
 
     <!-- JS -->
+    <script src="../../js/jquery.min.js?v=1.1"></script>
+    <script src="../../js/generic-modal.js?v=1.1"></script>
     <script src="../../js/modals_dashboard.js?v=1.1"></script>
     <script src="../../js/loading.js?v=1.1"></script>
     <script src="../../js/resumo.js?v=1.1"></script>

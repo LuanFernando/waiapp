@@ -48,7 +48,6 @@ btnSaveUser.addEventListener('click', function(){
         return response.json();
     })
     .then(data => {
-        console.log('Resposta da solicitação POST:', data);
 
         if(data.success == 1 && data.warning == 0 && data.error == 0){
             
@@ -63,7 +62,6 @@ btnSaveUser.addEventListener('click', function(){
                 return response.json();
             })
             .then(data => {
-                console.log('Responsta da solicitação ', data);
                 if(document.getElementById('tbody-users')){
                     document.getElementById('tbody-users').innerHTML = data.listUsers;
                 }
@@ -84,7 +82,6 @@ btnSaveUser.addEventListener('click', function(){
             return response.json();// Se você espera uma resposta JSON
             })
             .then(data => {
-                console.log('Resposta da solicitação GET:', data);
 
             if(document.getElementById('qnt-usuario')){
                 document.getElementById('qnt-usuario').textContent = data.totalUsers;

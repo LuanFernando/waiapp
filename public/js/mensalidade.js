@@ -48,7 +48,6 @@ function chamaFetchGenerica(id, url)
         beforeSendFunction('hide');
         if(data.success == 1 && data.warning == 0 && data.error == 0){
 
-            console.log(data.optionYear)
             if(data.optionYear != ''){
                 document.getElementById('selectYearMensal').innerHTML = data.optionYear;
             }
@@ -158,7 +157,6 @@ function carregaMensalidadePorAno(ano, idAluno,url)
             return response.json();
         })
         .then(data => {
-            console.log(data);
             
             beforeSendFunction('hide');
             if(data.success == 1 && data.warning == 0 && data.error == 0){
@@ -181,4 +179,32 @@ if(document.getElementById('btnGerarMensalidade')){
     document.getElementById('btnGerarMensalidade').addEventListener('click', function(){
         modalGerarMensalidade.showModal();
     })
+}
+
+
+function pagarMensalidade(id){
+
+    let  urlHtml = "";
+    if(document.getElementById('modal-users-resumo')){
+        urlHtml = "../../common-component/modals-html/pagar-mensalidade.html";
+    } else {
+        urlHtml = "../common-component/modals-html/pagar-mensalidade.html";
+    }
+
+    // cria modal de forma dinamica.
+    createLargeGenericModal('Pagar Mensalidade N°: '+id, urlHtml ,{ idMensalidadeAluno : id});
+}
+
+function cancelarMensalidade(id){
+
+    let  urlHtml = "";
+    if(document.getElementById('modal-users-resumo')){
+        urlHtml = "../../common-component/modals-html/cancelar-mensalidade.html";
+    } else {
+        urlHtml = "../common-component/modals-html/cancelar-mensalidade.html";
+    }
+
+    // cria modal de forma dinamica.
+    createGenericModalMedia('Cancelar Mensalidade N°: '+id, urlHtml ,{ idMensalidadeAluno : id});
+
 }

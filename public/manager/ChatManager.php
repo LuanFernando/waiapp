@@ -125,6 +125,7 @@ if($_SERVER['REQUEST_METHOD'] === 'GET'){
 
         $response = ['message' => $message];
         echo json_encode($response);
+        return;
     }
 }
 else if($_SERVER['REQUEST_METHOD'] === 'POST'){
@@ -137,6 +138,7 @@ else if($_SERVER['REQUEST_METHOD'] === 'POST'){
         http_response_code(400);//Método erro
         $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => ''];
         echo json_encode($response); 
+        return;
     }
 
 
@@ -152,6 +154,7 @@ else if($_SERVER['REQUEST_METHOD'] === 'POST'){
         if(empty($message) || empty($idDestino) || empty($idOrigem)){
             $response = ['warning' => 1, 'error' => 0, 'success' => 0, 'message' => 'Não foi possivel enviar a mensagem para o usuário, atualize a página e tente novamente!'];
             echo json_encode($response);
+            return;
         }
 
         $stmt = $conn->prepare("INSERT INTO chat_message (origin_id, destiny_id, message, created, updated) VALUES (? ,? ,? ,? ,?) ");
@@ -161,10 +164,12 @@ else if($_SERVER['REQUEST_METHOD'] === 'POST'){
             http_response_code(200); //success
             $response = ['warning' => 0, 'error' => 0, 'success' => 1, 'message' => ""];
             echo json_encode($response);
+            return;
         }else{
             http_response_code(400); // error
             $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => 'Não foi possivel enviar a mensagem para o usuário, algo deu errado!'];
             echo json_encode($response);
+            return;
         }
     } else if($dataJson['action'] == 'newMessageLike'){
         
@@ -179,6 +184,7 @@ else if($_SERVER['REQUEST_METHOD'] === 'POST'){
             if(empty($idDestino) || empty($idOrigem)){
                 $response = ['warning' => 1, 'error' => 0, 'success' => 0, 'message' => 'Não foi possivel enviar a mensagem para o usuário, atualize a página e tente novamente!'];
                 echo json_encode($response);
+                return;
             }
     
             $stmt = $conn->prepare("INSERT INTO chat_message (origin_id, destiny_id, reaction, created, updated,message) VALUES (? ,? ,? ,? ,?,?) ");
@@ -188,10 +194,12 @@ else if($_SERVER['REQUEST_METHOD'] === 'POST'){
                 http_response_code(200); //success
                 $response = ['warning' => 0, 'error' => 0, 'success' => 1, 'message' => ""];
                 echo json_encode($response);
+                return;
             }else{
                 http_response_code(400); // error
                 $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => 'Não foi possivel enviar a mensagem para o usuário, algo deu errado!'];
                 echo json_encode($response);
+                return;
             }
         
     } else if($dataJson['action'] == 'newMessageDesLike'){
@@ -207,6 +215,7 @@ else if($_SERVER['REQUEST_METHOD'] === 'POST'){
         if(empty($idDestino) || empty($idOrigem)){
             $response = ['warning' => 1, 'error' => 0, 'success' => 0, 'message' => 'Não foi possivel enviar a mensagem para o usuário, atualize a página e tente novamente!'];
             echo json_encode($response);
+            return;
         }
 
         $stmt = $conn->prepare("INSERT INTO chat_message (origin_id, destiny_id, reaction, created, updated,message) VALUES (? ,? ,? ,? ,?, ?) ");
@@ -216,10 +225,12 @@ else if($_SERVER['REQUEST_METHOD'] === 'POST'){
             http_response_code(200); //success
             $response = ['warning' => 0, 'error' => 0, 'success' => 1, 'message' => ""];
             echo json_encode($response);
+            return;
         }else{
             http_response_code(400); // error
             $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => 'Não foi possivel enviar a mensagem para o usuário, algo deu errado!'];
             echo json_encode($response);
+            return;
         }
     
 }

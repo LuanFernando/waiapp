@@ -35,6 +35,8 @@ include_once('../config.env.php');
     <?php require('../common-component/navbar.php'); ?>
     <?php include_once('screen_crud_users.php'); ?>
     <?php include_once('screen_new_edit_user.php'); ?>
+    <?php require('../common-component/generic-modal-media.php'); ?>
+    <?php require('../common-component/large-generic-modal.php'); ?>
 
     <?php 
     session_start(); 
@@ -90,6 +92,8 @@ include_once('../config.env.php');
         </div>
 
         <!-- JS -->
+        <script src="../js/jquery.min.js?v=1.1"></script>
+        <script src="../js/generic-modal.js?v=1.1"></script>
         <script src="../js/loading.js?v=1.1"></script>
         <script src="../js/dashboard.js?v=1.2"></script>
         <script src="../js/modals_dashboard.js?v=1.1"></script>

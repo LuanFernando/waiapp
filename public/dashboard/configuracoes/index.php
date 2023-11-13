@@ -23,6 +23,7 @@ include_once('../../config.env.php');
     <link rel="stylesheet" href="../../css/style_buttons.css">
     <link rel="stylesheet" href="../../css/style_modal_loggoff.css">
     <link rel="stylesheet" href="../../css/style_modal_loading.css">
+    <link rel="icon" href="/../../img/favicon.ico" type="type/x-icon">
 </head>
 <body>
     

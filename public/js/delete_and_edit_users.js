@@ -93,7 +93,6 @@ function deleteUser()
                 return response.json();
             })
             .then(data => {
-                console.log('Responsta da solicitação ', data);
                 if(document.getElementById('tbody-users')){
                     document.getElementById('tbody-users').innerHTML = data.listUsers;
                 }
@@ -118,7 +117,6 @@ function deleteUser()
             return response.json();// Se você espera uma resposta JSON
             })
             .then(data => {
-                console.log('Resposta da solicitação GET:', data);
 
             if(document.getElementById('qnt-usuario')){
                 document.getElementById('qnt-usuario').textContent = data.totalUsers;
@@ -167,7 +165,6 @@ function editUser(id)
         return response.json();
     })
     .then(data => {
-        console.log(data);
 
         beforeSendFunction('hide');
 

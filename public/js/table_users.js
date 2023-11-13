@@ -11,7 +11,6 @@ if(document.getElementById('modal-users-resumo')){
         return response.json();
     })
     .then(data => {
-        console.log('Responsta da solicitação ', data);
         if(document.getElementById('tbody-users')){
             document.getElementById('tbody-users').innerHTML = data.listUsers;
         }
@@ -22,7 +21,6 @@ if(document.getElementById('modal-users-resumo')){
 
 } else if(document.getElementById('modalCrudUsers')){
 
-    console.log('aqui')
     fetch(urlTableUsers)
     .then(response => {
         if(!response.ok){
@@ -31,7 +29,6 @@ if(document.getElementById('modal-users-resumo')){
         return response.json();
     })
     .then(data => {
-        console.log('Responsta da solicitação ', data);
         if(document.getElementById('tbody-users')){
             document.getElementById('tbody-users').innerHTML = data.listUsers;
         }
