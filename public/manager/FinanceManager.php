@@ -248,6 +248,71 @@ include_once('../connection.php');
             echo json_encode($response);
             return;
         }
+    } else if($_GET['action'] == 'detalhes'){
+        $idMensalidadeAluno = $_GET['idMensalidadeAluno'];
+        if($idMensalidadeAluno > 0){
+
+            try {
+                // Preparar a declaração SQL
+                $stmt = $conn->prepare("SELECT mp.id, mp.valor FROM monthly_payment mp
+                WHERE mp.id = ? AND mp.status_pagamento = 'pendente' ");
+        
+                // Vincular os parâmetros
+                $stmt->bind_param("i", $idMensalidadeAluno);
+
+                // Executar a consulta
+                $stmt->execute();
+            
+            } catch (\Exception $e) {
+                // echo $e;
+                $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => 'Erro: '.$e];
+                echo json_encode($response);
+                return;
+            }
+
+             // Obter resultados
+             $result = $stmt->get_result();
+
+             if($result != null){
+                $strTable = '';
+                $numItem = 1;
+                $valorTotal = 0;
+
+                $strTable .="<table class='table'>";
+                $strTable .="<thead>";
+                $strTable .="<tr>";
+                $strTable .="<th>ITEM</th>";
+                $strTable .="<th>QUANT.</th>";
+                $strTable .="<th>SUBTOTAL</th>";
+                $strTable .="<th>DESCONTO</th>";
+                $strTable .="</tr>";
+                $strTable .="</thead>";
+
+                $strTable .="<tbody>";
+                while ($row = $result->fetch_assoc()) {
+                    $valor = number_format($row['valor'], 2 , ',' , '.');
+                    $valorTotal =  $valor;
+
+                    $strTable .="<tr>";
+                    $strTable .="<td>{$numItem}</td>";
+                    $strTable .="<td>1</td>";
+                    $strTable .="<td>{$valor}</td>";
+                    $strTable .="<td>0,00</td>";
+                    $strTable .="</tr>";
+
+                    $numItem++;
+                }
+                $strTable .="</tbody>";
+            }
+
+             $response = ['warning' => 0, 'success' => 1, 'error' => 0 ,'message' => null ,'detalhes' => $strTable , 'valorTotal' => 'R$ '.$valorTotal];
+             echo json_encode($response);
+             return;
+        } else {
+            $response = ['warning' => 0, 'error' => 1, 'success' => 0, 'message' => 'Não foi possivel identificar o idMensalidadeAluno'];
+            echo json_encode($response);
+            return;
+        }
     }
 
  } else if($_SERVER['REQUEST_METHOD'] === 'POST'){

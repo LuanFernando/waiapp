@@ -192,7 +192,7 @@ function pagarMensalidade(id){
     }
 
     // cria modal de forma dinamica.
-    createLargeGenericModal('Pagar Mensalidade N°: '+id, urlHtml ,{ idMensalidadeAluno : id});
+    createLargeGenericModal('Pagar Mensalidade N°: '+id, urlHtml ,{ idMensalidadeAluno : id}, detalhesPagamento);
 }
 
 function cancelarMensalidade(id){
@@ -205,6 +205,50 @@ function cancelarMensalidade(id){
     }
 
     // cria modal de forma dinamica.
-    createGenericModalMedia('Cancelar Mensalidade N°: '+id, urlHtml ,{ idMensalidadeAluno : id});
+    createGenericModalMedia('Cancelar Mensalidade N°: '+id, urlHtml ,{ idMensalidadeAluno : id}, null);
 
+}
+
+function detalhesPagamento()
+{
+    if(document.getElementById('detalhes-pagamento')){
+        let idMensalidadeAluno = document.getElementById('idMensalidadeAluno').value;
+        var url = '';
+    
+        if(document.getElementById('modal-users-resumo')){
+            url = '../../manager/FinanceManager.php?action=detalhes&idMensalidadeAluno='+idMensalidadeAluno;
+        } else {
+            url = '../../manager/FinanceManager.php?action=detalhes&idMensalidadeAluno='+idMensalidadeAluno;
+        }
+    
+        console.log(url)
+
+        beforeSendFunction('show');
+
+        fetch(url)
+        .then(response => {
+            if(!response.ok){
+                throw new Error('Falha na requisição');
+            }
+    
+            return response.json();
+        })
+        .then(data => {
+            
+            beforeSendFunction('hide');
+            console.log(data);
+    
+            if(data.success == 1 && data.warning == 0 && data.error == 0){
+                document.getElementById('detalhes-pagamento').innerHTML = data.detalhes;
+                document.getElementById('totalPagar').textContent = data.valorTotal;
+            } else if(data.success == 0 && data.warning == 1 && data.error == 0){
+                alert(data.message);
+            } else if(data.success == 0 && data.warning == 0 && data.error == 1){
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.log('Erro: '+error);
+        })
+    }
 }

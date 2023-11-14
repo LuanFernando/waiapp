@@ -19,27 +19,25 @@
     </div>
 </div>
 
-<div class="detalhes-pagamento">
-    <label for="">ITEM | QUANT | SUBTOTAL | Desconto </label>
-    <label for="">1    | 1 | 90,00 | 00,0 </label>
+<div class="detalhes-pagamento" id="detalhes-pagamento">
 </div>
 
 <div class="valores-pagamento">
     <div  class="valores">
         <label for="">Total</label>
-        <label for="">R$ 0,00</label>
+        <label for="" id="totalPagar">R$ 0,00</label>
     </div>
     <div  class="valores">
-        <label for="">Entrada</label>
-        <input type="text" id="" name="" class="input-valores">
+        <label for="">Entrada (R$)</label>
+        <input type="text" id="inputEntrada" name="inputEntrada" class="input-valores">
     </div>
     <div  class="valores">
-        <label for="">Desconto</label>
-        <input type="text" id="" name="" class="input-valores">
+        <label for="">Desconto (R$)</label>
+        <input type="text" id="inputDesconto" name="inputDesconto" class="input-valores">
     </div>
     <div  class="valores">
         <label for="">Forma pagamento</label>
-        <select name="" id="" class="selectedPayment">
+        <select name="selectPagamento" id="selectPagamento" class="selectedPayment">
             <option value="">Dinheiro</option>
             <option value="">Cartão</option>
             <option value="">Pix</option>
@@ -53,3 +51,5 @@
         <button class="btnFinalizarPagamento">Finalizar</button>
     </div>
 </div>
+
+<script src="../../js/pagar_mensalidade.js?v=1.1"></script>

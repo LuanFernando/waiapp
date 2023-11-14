@@ -118,7 +118,7 @@
 }
 
 .valores-pagamento{
-    position: fixed;
+    /* position: fixed; */
     bottom: 56px;
     width: 100%;
     background: #3f4c6b;
@@ -137,6 +137,7 @@
     display: flex;
     gap: 8px;
     justify-content: flex-end;
+    padding: 12px;
 }
 
 .valores{

@@ -4,7 +4,7 @@ const largeGenericModal = document.getElementById('largeGenericModal');
 const btnLargeGenericModalClose = document.getElementById('btnLargeGenericModalClose');
 const btnGenericModalMediaClose = document.getElementById('btnGenericModalMediaClose');
 
-function createLargeGenericModal(title, pathHtml, listHiddenFields){
+function createLargeGenericModal(title, pathHtml, listHiddenFields, callback){
 
     $("#bodyLargeGenericModal").load(pathHtml, function(response, status, xhr){
 
@@ -33,12 +33,17 @@ function createLargeGenericModal(title, pathHtml, listHiddenFields){
 
             // Apos carregar todo o conteudo na modal generica abre a modal.
             largeGenericModal.showModal();
+
+            // executa a função
+            if(callback != null){
+                callback();
+            }
         }
     });
         
 }
 
-function createGenericModalMedia(title, pathHtml, listHiddenFields){
+function createGenericModalMedia(title, pathHtml, listHiddenFields, callback){
 
     $("#bodyGenericModalMediaModal").load(pathHtml, function(response, status, xhr){
         if(status == "error"){
@@ -66,6 +71,11 @@ function createGenericModalMedia(title, pathHtml, listHiddenFields){
 
             // Apos carregar todo o conteudo na modal generica abre a modal.
             genericModalMedia.showModal();
+
+            // executa a função
+            if(callback != null){
+                callback();
+            }
         }
     });
 
