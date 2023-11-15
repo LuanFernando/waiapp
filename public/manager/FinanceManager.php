@@ -297,7 +297,7 @@ include_once('../connection.php');
                     $strTable .="<td>{$numItem}</td>";
                     $strTable .="<td>1</td>";
                     $strTable .="<td>{$valor}</td>";
-                    $strTable .="<td>0,00</td>";
+                    $strTable .="<td id='td-desconto'>0,00</td>";
                     $strTable .="</tr>";
 
                     $numItem++;
@@ -305,7 +305,7 @@ include_once('../connection.php');
                 $strTable .="</tbody>";
             }
 
-             $response = ['warning' => 0, 'success' => 1, 'error' => 0 ,'message' => null ,'detalhes' => $strTable , 'valorTotal' => 'R$ '.$valorTotal];
+             $response = ['warning' => 0, 'success' => 1, 'error' => 0 ,'message' => null ,'detalhes' => $strTable , 'valorTotal' => 'R$ '.$valorTotal,'valorSemFormat' => $valor];
              echo json_encode($response);
              return;
         } else {
