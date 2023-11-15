@@ -28,7 +28,7 @@ include_once('../config.env.php');
     </div>
 
     <section id="login">
-        <form action="../auth.php" method="post">
+        <form action="../auth.php" method="post" id="form-login">
             <input type="hidden" name="action" id="action" value="auth">
             <div class="box-login">
                 <div class="box-login-inputs">
@@ -46,3 +46,7 @@ include_once('../config.env.php');
     </section>
 </body>
 </html>
+
+<!-- JS -->
+<script src="../js/jquery.min.js?v=1.1"></script>
+<script src="../js/login.js?v=1.1"></script>
