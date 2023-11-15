@@ -192,7 +192,7 @@ function pagarMensalidade(id){
     }
 
     // cria modal de forma dinamica.
-    createLargeGenericModal('Pagar Mensalidade N°: '+id, urlHtml ,{ idMensalidadeAluno : id}, detalhesPagamento);
+    createLargeGenericModal('Pagar Mensalidade N°: '+id, urlHtml ,{ idMensalidadeAluno : id ,valorSemFormat : 0}, detalhesPagamento);
 }
 
 function cancelarMensalidade(id){
@@ -241,6 +241,7 @@ function detalhesPagamento()
             if(data.success == 1 && data.warning == 0 && data.error == 0){
                 document.getElementById('detalhes-pagamento').innerHTML = data.detalhes;
                 document.getElementById('totalPagar').textContent = data.valorTotal;
+                document.getElementById('valorSemFormat').value = data.valorSemFormat;
             } else if(data.success == 0 && data.warning == 1 && data.error == 0){
                 alert(data.message);
             } else if(data.success == 0 && data.warning == 0 && data.error == 1){
