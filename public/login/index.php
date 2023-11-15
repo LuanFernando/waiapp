@@ -31,6 +31,9 @@ include_once('../config.env.php');
         <form action="../auth.php" method="post" id="form-login">
             <input type="hidden" name="action" id="action" value="auth">
             <div class="box-login">
+                <div class="brand-login">
+                    <h5><?php echo $nameApp; ?></h5>
+                </div>
                 <div class="box-login-inputs">
                     <label for="">Usuário:</label>
                     <input type="text" id="usuario" name="usuario" placeholder="Informe o seu usuário...">
