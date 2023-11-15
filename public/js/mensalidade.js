@@ -192,7 +192,14 @@ function pagarMensalidade(id){
     }
 
     // cria modal de forma dinamica.
-    createLargeGenericModal('Pagar Mensalidade N°: '+id, urlHtml ,{ idMensalidadeAluno : id ,valorSemFormat : 0}, detalhesPagamento);
+    createLargeGenericModal('Pagar Mensalidade N°: '+id, 
+    urlHtml ,
+    { 
+      idMensalidadeAluno : id ,
+      valorSemFormat : 0 ,
+      hiddenTotalPagar : 0
+    }, 
+    detalhesPagamento);
 }
 
 function cancelarMensalidade(id){
@@ -221,7 +228,6 @@ function detalhesPagamento()
             url = '../../manager/FinanceManager.php?action=detalhes&idMensalidadeAluno='+idMensalidadeAluno;
         }
     
-        console.log(url)
 
         beforeSendFunction('show');
 
@@ -236,12 +242,13 @@ function detalhesPagamento()
         .then(data => {
             
             beforeSendFunction('hide');
-            console.log(data);
+      
     
             if(data.success == 1 && data.warning == 0 && data.error == 0){
                 document.getElementById('detalhes-pagamento').innerHTML = data.detalhes;
                 document.getElementById('totalPagar').textContent = data.valorTotal;
                 document.getElementById('valorSemFormat').value = data.valorSemFormat;
+                document.getElementById('hiddenTotalPagar').value = data.valorSemFormat;
             } else if(data.success == 0 && data.warning == 1 && data.error == 0){
                 alert(data.message);
             } else if(data.success == 0 && data.warning == 0 && data.error == 1){
