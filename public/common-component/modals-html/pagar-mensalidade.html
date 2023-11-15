@@ -37,15 +37,15 @@
     </div>
     <div  class="valores">
         <label for="">Forma pagamento</label>
-        <select name="selectPagamento" id="selectPagamento" class="selectedPayment">
-            <option value="">Dinheiro</option>
-            <option value="">Cartão</option>
-            <option value="">Pix</option>
+        <select name="selectPagamento" id="selectPagamento" class="selectedPayment" onchange="changeSelect();">
+            <option value="1">Dinheiro</option>
+            <option value="2">Cartão</option>
+            <option value="3">Pix</option>
         </select>
     </div>
     <div  class="valores">
         <label for="">Troco</label>
-        <label for="">R$ 0,00</label>
+        <label for="" id="troco">R$ 0,00</label>
     </div>
     <div class="valores">
         <button class="btnFinalizarPagamento">Finalizar</button>
