@@ -45,6 +45,11 @@ include_once('../config.env.php');
                 <!-- <div class="row-white"></div> -->
                 <button type="submit" id="btnEntrar">ENTRAR</button>
             </div>
+            <div class="box-info" id="box-info">
+                <h5>Informações</h5>
+                <label>* Cadastro de alunos</label>
+                <label>* Gestão de mensalidades</label>
+            </div>
         </form>
     </section>
 </body>
