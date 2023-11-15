@@ -7,6 +7,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
         var boxLogin = $('.box-login');
         boxLogin.css ('display','flex');
+        boxLogin.css('align-items','center');
     } else {
         var formLogin = $("#form-login");
         formLogin.animate({height:'400px'}, "slow");
@@ -14,6 +15,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
         var boxLogin = $('.box-login');
         boxLogin.css ('display','flex');
+        boxLogin.css('align-items','center');
 
     }
 });
