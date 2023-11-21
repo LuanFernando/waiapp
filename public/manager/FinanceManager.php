@@ -152,6 +152,8 @@ include_once('../connection.php');
                 
              if($result != null){
 
+                $disabledbtnPagar = "";
+
                 $table .= "<table class='table' id='tableMensalidades'>";
                 $table .= "<thead>";
                 $table .= "<tr>";
@@ -172,6 +174,12 @@ include_once('../connection.php');
 
                     $valor = number_format($row['Valor'], 2 , ',' , '.');
 
+                    if($row['Status'] == 'pago' && $row['DataPagamento'] != ''){
+                        $disabledbtnPagar = 'link-desabilitado';
+                    }else {
+                        $disabledbtnPagar = '';
+                    }
+
                     $table .= "<tr>";
                     $table .= "<td>{$row['DataVencimento']}</td>";
                     $table .= "<td>{$row['DataPagamento']}</td>";
@@ -181,7 +189,7 @@ include_once('../connection.php');
                     $table .= "<td>{$row['Observacaoes']}</td>";
                     $table .= "<td>{$row['Status']}</td>";
                     $table .= "<td class='td-actions'>";
-                        $table .= "<a href='#' data-id='{$row['id']}' onclick='pagarMensalidade({$row['id']})' class='btn-mensalidade-pagar'>Pagar</a>";
+                        $table .= "<a href='#' data-id='{$row['id']}' onclick='pagarMensalidade({$row['id']})' class='btn-mensalidade-pagar {$disabledbtnPagar}'>Pagar</a>";
                         $table .= "<a href='#' data-id='{$row['id']}' onclick='cancelarMensalidade({$row['id']})' class='btn-mensalidade-cancelar'>Cancelar</a>";
                     $table .= "</td>";
                     $table .= "</tr>"; 
@@ -562,6 +570,157 @@ include_once('../connection.php');
                       
         }
 
+    } else if($dataJson['action'] == 'baixarmensalidade'){
+        $totalPagar     = $dataJson['totalPagar'];
+        $formaPagamento = $dataJson['formaPagamento']; // 1 dinheiro , 2 cartão , 3 pix
+        $inputEntrada   = $dataJson['inputEntrada'];
+        $inputDesconto  = $dataJson['inputDesconto'];
+        $idMensalidade  = $dataJson['idMensalidadeAluno'];
+
+        $valorPagarFormat   = str_replace(',' , '.', $totalPagar);
+        $valorEntradaFormat = str_replace(',', '.', $inputEntrada);
+        $valorDesconto      = str_replace(',', '.', $inputDesconto);
+
+        session_start();
+        $idUsuarioBaixa      = $_SESSION['idUser'];
+        $valorRealConsulta   = 0;
+        $dataAtualPagamento  = date('Y-m-d');
+        $observacoes         = "";
+        $arrayAuxPagamentos  = array(
+            1 => 'dinheiro',
+            2 => 'cartão',
+            3 => 'pix',
+            4 => 'debito',
+            5 => 'fiado',
+            6 => 'empenho',
+            7 => 'cortesia'
+        );
+
+        $troco = $inputEntrada - $valorPagarFormat;
+        $descricaoFormaPagamento = $arrayAuxPagamentos[$formaPagamento];
+
+
+        if($formaPagamento == '' || $formaPagamento == null || $formaPagamento == 0){
+            $response = [
+                'warning' => 0, 
+                'error' => 1, 
+                'success' => 0, 
+                'message' => "Erro: A forma de pagamento não foi informada!"];
+                echo json_encode($response);
+            return;
+        }
+
+        if($inputEntrada == '' || $inputEntrada == null || $inputEntrada == 0){
+            $response = [
+                'warning' => 0, 
+                'error' => 1, 
+                'success' => 0, 
+                'message' => "Erro: O valor de entrada não foi informado!"];
+                echo json_encode($response);
+            return;
+        }
+
+        if($idMensalidade == 0 || $idMensalidade == '' || $idMensalidade == null){
+            $response = [
+                'warning' => 0, 
+                'error' => 1, 
+                'success' => 0, 
+                'message' => "Erro: ID da mensalidade não encontrado!"];
+                echo json_encode($response);
+            return;
+        }
+
+        # resgata o valor real da parcela para fazer as validações.
+        try {
+            $stmt3 = $conn->prepare("SELECT valor FROM monthly_payment WHERE id = ?; ");
+
+            // Vincular os parâmetros
+            $stmt3->bind_param("i", $idMensalidade);
+
+            // Executar a consulta
+            $stmt3->execute();
+        
+            $result3 = $stmt3->get_result();
+            if($result3 != null){
+                while ($row = $result3->fetch_assoc()) {
+                    $valorRealConsulta = $row['valor'];
+                }
+            }
+
+        } catch (\Exception $e) {
+            // echo $e;
+            http_response_code(400); // error
+            $response = [
+                'warning' => 0, 
+                'error' => 1, 
+                'success' => 0, 
+                'message' => "Erro: ".$e];
+                echo json_encode($response);
+                return;
+        }
+
+        if($valorDesconto > 0 && $valorDesconto != '' && $valorDesconto != null){
+            // abaixo é usado o valor real capturado do banco menos o valor de desconto informado pelo usuário , depois comparamos se 
+            // o valores batem
+            $valorAux =  $valorRealConsulta - $valorDesconto;
+
+            if($valorPagarFormat == $valorAux){
+
+                $observacoes = "Valor Real {$valorRealConsulta} - Valor Desconto {$valorDesconto} - Valor Total Pago {$valorPagarFormat} - Forma Pagamento {$formaPagamento} - Troco {$troco}";
+                $status = "pago";
+
+                # update monthly_payment
+                $stmt =  $conn->prepare("UPDATE monthly_payment SET dataPagamento = ?, formaPagamento = ?, idUsuarioBaixa = ?,
+                observacoes = ? , status_pagamento = ? WHERE id = ?");
+                $stmt->bind_param("ssissi",$dataAtualPagamento,$descricaoFormaPagamento,$idUsuarioBaixa,$observacoes,$status,$idMensalidade);
+    
+                if($stmt->execute()){
+                    http_response_code(200); //success
+                    $response = ['warning' => 0, 'error' => 0, 'success' => 1, 'message' => "Mensalidade paga com sucesso!"];
+                    echo json_encode($response);
+                    return;
+                }else{
+                    http_response_code(400); // error
+                    $response = ['warning' => 0, 'error' => 1, 'success' => 0, 
+                    'message' => "Não foi possivel atualizar a mensalidade de n°: {$idMensalidade}, algo deu errado!"];
+                    echo json_encode($response);
+                    return;
+                }
+
+            } else {
+                http_response_code(400); // error
+                $response = [
+                    'warning' => 0, 
+                    'error' => 1, 
+                    'success' => 0, 
+                    'message' => "Erro: O valor a pagar não corresponde ao valor real da mensalidade!"];
+                    echo json_encode($response);
+                    return;
+            }
+        } else {
+            
+            $observacoes = "Valor Real {$valorRealConsulta} - Valor Desconto {$valorDesconto} - Valor Total Pago {$valorPagarFormat} - Forma Pagamento {$formaPagamento}  - Troco {$troco}";
+            $status = "pago";
+
+            # update monthly_payment
+            $stmt =  $conn->prepare("UPDATE monthly_payment SET dataPagamento = ?, formaPagamento = ?, idUsuarioBaixa = ?,
+            observacoes = ? , status_pagamento = ? WHERE id = ?");
+            $stmt->bind_param("ssissi",$dataAtualPagamento,$descricaoFormaPagamento,$idUsuarioBaixa,$observacoes,$status,$idMensalidade);
+
+            if($stmt->execute()){
+                http_response_code(200); //success
+                $response = ['warning' => 0, 'error' => 0, 'success' => 1, 'message' => "Mensalidade paga com sucesso!"];
+                echo json_encode($response);
+                return;
+            }else{
+                http_response_code(400); // error
+                $response = ['warning' => 0, 'error' => 1, 'success' => 0, 
+                'message' => "Não foi possivel atualizar a mensalidade de n°: {$idMensalidade}, algo deu errado!"];
+                echo json_encode($response);
+                return;
+            }
+        }
+                
     }
 
  }

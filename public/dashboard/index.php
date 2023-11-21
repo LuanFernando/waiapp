@@ -29,6 +29,7 @@ include_once('../config.env.php');
     <link rel="stylesheet" href="../css/style_mensalidade.css">
     <link rel="stylesheet" href="../css/style_modal_gerar_mensalidade.css">
     <link rel="stylesheet" href="../css/style_modal_loading.css">
+    <link rel="stylesheet" href="../css/chat-bot.css">
 </head>
 <body>
     
@@ -91,12 +92,24 @@ include_once('../config.env.php');
 
         </div>
 
+        <!-- chat boot -->
+        <div class="box-chat-bot">
+            <div class="img-bot">
+                <img src="../img/chatbot.png" alt="">
+            </div>
+            <div class="chat-bot-button">
+                <a href="#">Como posso ajudar hoje?</a>
+            </div>
+        </div>
+        <!--  -->
+
         <!-- JS -->
         <script src="../js/jquery.min.js?v=1.1"></script>
         <script src="../js/generic-modal.js?v=1.1"></script>
         <script src="../js/loading.js?v=1.1"></script>
         <script src="../js/dashboard.js?v=1.2"></script>
         <script src="../js/modals_dashboard.js?v=1.1"></script>
+        <script src="../js/chat-bot.js?v=1.1"></script>
 
     <?php 
         } else {

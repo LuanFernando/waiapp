@@ -1,0 +1,38 @@
+.chat-bot-button {
+    background-color: #3f4c6b;
+    padding: 12px;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.20) 0px 5px 15px;
+}
+
+.chat-bot-button a {
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.chat-bot-button a:hover {
+    color: #e65c00;
+}
+
+.box-chat-bot {
+ bottom: 12px;
+ right: 12px;
+ position: absolute;
+ display: flex;
+ flex-direction: column;
+ align-content: center;
+ justify-content: center;
+ align-items: center;
+ gap: 4px;
+}
+
+.img-bot img {
+    width: 52px;
+}
+
+@media (max-width: 1207px){
+    .box-chat-bot {
+        display: none;
+    }
+}
