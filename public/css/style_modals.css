@@ -159,6 +159,39 @@
     padding: 12px; 
 }
 
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btnCancelarMensalidadeNao{
+    padding: 12px;
+    width: 100px;
+    border: 1px solid #d54d52;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: #d54d52;
+    cursor:pointer;
+}
+
+.btnCancelarMensalidadeSim {
+    padding: 12px;
+    width: 100px;
+    border: 1px solid #aad961;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: #aad961;
+    cursor:pointer;
+}
+#mensagem-cancelar {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
 @media (max-width:1207px){
     .modal-media {
         position: fixed;

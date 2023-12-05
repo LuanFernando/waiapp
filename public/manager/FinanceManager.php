@@ -153,6 +153,7 @@ include_once('../connection.php');
              if($result != null){
 
                 $disabledbtnPagar = "";
+                $disabledbtnCancelar = "";
 
                 $table .= "<table class='table' id='tableMensalidades'>";
                 $table .= "<thead>";
@@ -180,6 +181,12 @@ include_once('../connection.php');
                         $disabledbtnPagar = '';
                     }
 
+                    if($row['Status'] == 'cancelado' || $row['Status'] == 'pago'){
+                        $disabledbtnCancelar = 'link-desabilitado';
+                    } else {
+                        $disabledbtnCancelar = "";
+                    }
+
                     $table .= "<tr>";
                     $table .= "<td>{$row['DataVencimento']}</td>";
                     $table .= "<td>{$row['DataPagamento']}</td>";
@@ -190,7 +197,7 @@ include_once('../connection.php');
                     $table .= "<td>{$row['Status']}</td>";
                     $table .= "<td class='td-actions'>";
                         $table .= "<a href='#' data-id='{$row['id']}' onclick='pagarMensalidade({$row['id']})' class='btn-mensalidade-pagar {$disabledbtnPagar}'>Pagar</a>";
-                        $table .= "<a href='#' data-id='{$row['id']}' onclick='cancelarMensalidade({$row['id']})' class='btn-mensalidade-cancelar'>Cancelar</a>";
+                        $table .= "<a href='#' data-id='{$row['id']}' onclick='cancelarMensalidade({$row['id']})' class='btn-mensalidade-cancelar {$disabledbtnCancelar}'>Cancelar</a>";
                     $table .= "</td>";
                     $table .= "</tr>"; 
                 }
